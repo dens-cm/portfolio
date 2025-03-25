@@ -1,6 +1,6 @@
 import React from 'react'
 import * as Chakra from '@chakra-ui/react'
-import { FaUser, FaCode, FaBriefcase } from "react-icons/fa"
+import { FaUser, FaCode, FaBriefcase, FaLaptopCode } from "react-icons/fa"
 import { FaPhone } from "react-icons/fa6"
 import dens from '../../assets/dens.JPG'
 import javascript_icon from '../../assets/icon/javascript.png'
@@ -14,6 +14,8 @@ import postgresql_icon from '../../assets/icon/postgresql.png'
 import python_icon from '../../assets/icon/python.png'
 import git_icon from '../../assets/icon/git.png'
 import nemsu_icon from '../../assets/icon/nemsu.png'
+import tasetemco from '../../assets/tasetemco.jpg'
+import tes from '../../assets/tes.png'
 
 export default function Contents() {
     return (
@@ -97,15 +99,15 @@ export default function Contents() {
                 <Chakra.Card w='60%' p='1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
                     <Chakra.Heading w='7.2vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaBriefcase size='.8vw' />Work History</Chakra.Heading>
                     <Chakra.Box w='100%' mt='3.5vw' p='0 1vw' display='flex'>
-                        <Chakra.Box w='7%' pr='1vw' display='flex' alignItems='start' justifyContent='right'>
-                            <Chakra.Image src={nemsu_icon} alt='Nemsu Logo' w='100%' />
+                        <Chakra.Box w='7%' pr='1vw' display='flex' alignItems='start' justifyContent='center'>
+                            <Chakra.Image onClick={() => window.open('https://nemsu-tagbina.edu.ph/')} src={nemsu_icon} alt='Nemsu Logo' w='95%' cursor='pointer' _hover={{w: '100%', boxShadow: '0vw .2vw .5vw rgba(106, 106, 106, 0.31)', borderRadius: 'full', transition: '.3s'}} transition='.2s' />
                         </Chakra.Box>
                         <Chakra.Box w='93%' pl='1vw' borderLeft='.1vw solid #b0b3b5'>
                             <Chakra.Box display='flex' justifyContent='space-between'>
                                 <Chakra.Heading variant='content'>Full-Stack Web Developer</Chakra.Heading>
                                 <Chakra.Heading variant='content' fontSize='sm' fontWeight='400'>Aug 2024 - <strong>Present</strong></Chakra.Heading>
                             </Chakra.Box>
-                            <Chakra.Text variant='caption' fontSize='sm'>North Eastern Mindanao State University</Chakra.Text>
+                            <Chakra.Text variant='caption' fontSize='sm'><Chakra.Link href='https://nemsu-tagbina.edu.ph/' isExternal>North Eastern Mindanao State University</Chakra.Link></Chakra.Text>
                             <Chakra.UnorderedList mt='.8vw' pl='1vw' fontSize="sm" color='primary'>
                                 <Chakra.ListItem>
                                     <Chakra.Text>
@@ -157,7 +159,7 @@ export default function Contents() {
                                 <Chakra.Heading variant='content'>Research Assistant </Chakra.Heading>
                                 <Chakra.Heading variant='content' fontSize='sm' fontWeight='400'>Aug 2024 - <strong>Oct 2024</strong></Chakra.Heading>
                             </Chakra.Box>
-                            <Chakra.Text variant='caption' fontSize='sm'>North Eastern Mindanao State University</Chakra.Text>
+                            <Chakra.Text variant='caption' fontSize='sm'><Chakra.Link href='https://nemsu-tagbina.edu.ph/' isExternal>North Eastern Mindanao State University</Chakra.Link></Chakra.Text>
                             <Chakra.UnorderedList mt='.8vw' pl='1vw' fontSize="sm" color='primary'>
                                 <Chakra.ListItem>
                                     <Chakra.Text>
@@ -192,11 +194,55 @@ export default function Contents() {
                     </Chakra.Box>
                 </Chakra.Card>
             </Chakra.Box>
-            <Chakra.Box mt='3.5vw' p='1.5vw 0' bg='white' display='flex' flexDirection='column' alignItems='center'>
-                <Chakra.Box w='60%' p='1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
-                    <Chakra.Heading w='4.2vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaCode />Projects</Chakra.Heading>
-                    <Chakra.Text mt='2vw' fontWeight='400'>Skills, tools, and technologies I excel at:</Chakra.Text>
-                    
+            <Chakra.Box mt='3.5vw' p='1.5vw 0' display='flex' flexDirection='column' alignItems='center'>
+                <Chakra.Box w='60%' p='1.5vw 0 1.5vw 1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
+                    <Chakra.Heading w='5.2vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaLaptopCode />Projects</Chakra.Heading>
+                    <Chakra.Text mt='2vw' fontWeight='400'>A few projects I’ve worked on and learned from:</Chakra.Text>
+                    <Chakra.Box mt='1.5vw' display='flex' justifyContent='space-between'>
+                        <Chakra.Box w='48%'>
+                            <Chakra.Heading><Chakra.Link href='https://tasetem.co/' isExternal>Tasetemco</Chakra.Link></Chakra.Heading>
+                            <Chakra.Text mt='.5vw'>
+                                A loan application system built with the MERN stack, designed to simplify
+                                loan requests and tracking. It provides a user-friendly interface, secure authentication,
+                                and an efficient process for managing applications and approvals.
+                            </Chakra.Text>
+                            <Chakra.Box mt='1vw' display='flex' flexWrap='wrap'>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>ReactJS</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>NodeJS</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>ExpressJS</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>MongoDB</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>JavaScript</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>ChakraUI</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>Styled Components</Chakra.Text>
+                            </Chakra.Box>
+                        </Chakra.Box>
+                        <Chakra.Box w='48%'>
+                            <Chakra.Card w='100%' h='15vw' bg='none' display='flex' alignItems='center' justifyContent='center' boxShadow='0'>
+                                <Chakra.Image onClick={() => window.open('https://tasetem.co/')} src={tasetemco} alt='tasetemco' w='90%' h='85%' borderRadius='1vw' cursor='pointer' boxShadow='0vw .2vw .5vw rgba(56, 56, 57, 0.09)' _hover={{ w: '95%', h: '90%', boxShadow: '0vw .2vw .5vw rgba(56, 56, 57, 0.09)', transition: '.3s' }} transition='.2s' />
+                            </Chakra.Card>
+                        </Chakra.Box>
+                    </Chakra.Box>
+                    <Chakra.Box mt='7vw' display='flex' justifyContent='space-between'>
+                        <Chakra.Box w='48%'>
+                            <Chakra.Heading><Chakra.Link href='https://tagongon-elementary-school.onrender.com/' isExternal>Tagongon Elementary School Profiling System</Chakra.Link></Chakra.Heading>
+                            <Chakra.Text mt='.5vw'>
+                                A Teacher Profiling System for Tagongon Elementary School, built with ReactJS and Firebase, 
+                                allowing for efficient and secure management of teacher data.
+                            </Chakra.Text>
+                            <Chakra.Box mt='1vw' display='flex' flexWrap='wrap'>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>ReactJS</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>NodeJS</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>Firebase</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>JavaScript</Chakra.Text>
+                                <Chakra.Text mb='.5vw' mr='.5vw' p='.4vw 1vw' bg='hover1' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'>ChakraUI</Chakra.Text>
+                            </Chakra.Box>
+                        </Chakra.Box>
+                        <Chakra.Box w='48%'>
+                            <Chakra.Card w='100%' h='15vw' bg='none' display='flex' alignItems='center' justifyContent='center' boxShadow='0'>
+                                <Chakra.Image onClick={() => window.open('https://tagongon-elementary-school.onrender.com/')} src={tes} alt='tasetemco' w='90%' h='85%' borderRadius='1vw' cursor='pointer' boxShadow='0vw .2vw .5vw rgba(56, 56, 57, 0.09)' _hover={{ w: '95%', h: '90%', boxShadow: '0vw .2vw .5vw rgba(56, 56, 57, 0.09)', transition: '.3s' }} transition='.2s'/>
+                            </Chakra.Card>
+                        </Chakra.Box>
+                    </Chakra.Box>
                 </Chakra.Box>
             </Chakra.Box>
         </Chakra.Box>
