@@ -8,6 +8,7 @@ const theme = extendTheme({
         accent: '#D9CAB3', //light brown
         placeholder: '#b0b3b5',
         hover: '#dddddd',
+        hover1: '#f2f2f2',
         warning: '#EA5455'
     },
     fontSizes: {
@@ -72,7 +73,7 @@ const theme = extendTheme({
             variants: {
                 filled: {
                     field: {
-                        height: '2.2vw',
+                        height: '2vw',
                         color: 'primary',
                         fontSize: 'sm',
                         bg: '#F6F6F6',
@@ -100,7 +101,7 @@ const theme = extendTheme({
             },
             variants: {
                 primary: {
-                    height: '2.2vw',
+                    height: '2vw',
                     color: 'base',
                     fontSize: 'sm',
                     bg: 'primary',
@@ -113,7 +114,7 @@ const theme = extendTheme({
                     }
                 },
                 highlight: {
-                    height: '2.2vw',
+                    height: '2vw',
                     color: 'base',
                     fontSize: 'sm',
                     bg: 'highlight',
@@ -122,6 +123,21 @@ const theme = extendTheme({
                     _hover: {
                         bg: 'hover',
                         color: 'highlight',
+                        transition: '.3s'
+                    }
+                },
+                outline: {
+                    height: '2vw',
+                    color: 'highlight',
+                    fontSize: 'sm',
+                    bg: 'none',
+                    border: '.1vw solid',
+                    borderColor: 'highlight',
+                    borderRadius: '.7vw',
+                    transition: '.3s',
+                    _hover: {
+                        bg: 'highlight',
+                        color: 'white',
                         transition: '.3s'
                     }
                 }

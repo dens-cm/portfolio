@@ -5,7 +5,7 @@ import Contents from '../components/layouts/Contents'
 
 export default function App() {
   return (
-    <Chakra.Box w='100vw' h='100vh' p='0 15vw' bg='#fafafa' display='flex' flexDirection='column' overflow='auto'>
+    <Chakra.Box w='100vw' h='100vh' bg='#fafafa' display='flex' flexDirection='column' overflow='auto'>
       <Header />
       <Contents/>
     </Chakra.Box>
