@@ -9,10 +9,8 @@ export default function Footer() {
                     @DENS 2025
                 </Chakra.Highlight>
             </Chakra.Text>
-            <Chakra.Text fontSize='xs'>
-                Designed in 
-                <Chakra.Link href='https://www.figma.com/' color='#ff7262' fontWeight='500' isExternal>Figma</Chakra.Link> and built with <Chakra.Link href='https://react.dev/' color='#7cc5d9' fontWeight='500' isExternal>ReactJS</Chakra.Link> and <Chakra.Link href='https://www.chakra-ui.com/' color='teal' fontWeight='500' isExternal>Chakra UI</Chakra.Link> in <Chakra.Link href='https://code.visualstudio.com/' color='#0078d7' fontWeight='500' isExternal>VS Code</Chakra.Link>.
-            </Chakra.Text> 
+            <Chakra.Text fontSize='xs'>Designed in <Chakra.Link href='https://www.figma.com/' color='#ff7262' fontWeight='500' isExternal>Figma</Chakra.Link> and built with <Chakra.Link href='https://react.dev/' color='#7cc5d9' fontWeight='500' isExternal>ReactJS</Chakra.Link> and <Chakra.Link href='https://www.chakra-ui.com/' color='teal' fontWeight='500' isExternal>Chakra UI</Chakra.Link> in <Chakra.Link href='https://code.visualstudio.com/' color='#0078d7' fontWeight='500' isExternal>VS Code</Chakra.Link>.
+            </Chakra.Text>
         </Chakra.Box>
     )
 }
