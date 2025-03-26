@@ -1,6 +1,7 @@
 import React from 'react'
 import * as Chakra from '@chakra-ui/react'
-import { FaUser, FaCode, FaBriefcase, FaLaptopCode } from "react-icons/fa"
+import { FaUser, FaCode, FaBriefcase, FaLaptopCode, FaHeadset, FaFacebook, FaInstagram, FaSkype } from "react-icons/fa"
+import { IoMail } from "react-icons/io5"
 import { FaPhone } from "react-icons/fa6"
 import dens from '../../assets/dens.JPG'
 import javascript_icon from '../../assets/icon/javascript.png'
@@ -19,7 +20,8 @@ import tes from '../../assets/tes.png'
 
 export default function Contents() {
     return (
-        <Chakra.Box p='1vw 0vw' display='flex' flexDirection='column'>
+        <Chakra.Box p='1vw 0vw 0 0' display='flex' flexDirection='column'>
+            {/* Hero */}
             <Chakra.Box mt='3.5vw' display='flex' flexDirection='column' alignItems='center'>
                 <Chakra.Image src={dens} alt='dens' w='12vw' boxShadow='0vw 0vw .4vw rgba(56, 56, 57, 0.59)' border='.9vw solid rgb(246, 246, 246)' borderRadius='full' />
                 <Chakra.Heading mt='2vw' variant='content' fontWeight='500'>Hi there, I'm</Chakra.Heading>
@@ -27,6 +29,7 @@ export default function Contents() {
                 <Chakra.Box w='15vw' h='.1vw' mt='.2vw' bg='#D9CAB3' borderRadius='full' />
                 <Chakra.Heading mt='.2vw' variant='content' fontWeight='400'>A Web Developer</Chakra.Heading>
             </Chakra.Box>
+            {/* About me */}
             <Chakra.Box mt='3.5vw' display='flex' flexDirection='column' alignItems='center'>
                 <Chakra.Card w='60%' p='1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
                     <Chakra.Heading w='6vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaUser size='.8vw' />About me</Chakra.Heading>
@@ -40,12 +43,13 @@ export default function Contents() {
                     <Chakra.Box w='100%' mt='2vw' display='flex' flexDirection='column'>
                         <hr />
                         <Chakra.Box mt='1vw' display='flex' justifyContent='right'>
-                            <Chakra.Button variant='outline' leftIcon={<FaPhone />}>Contact me!</Chakra.Button>
+                            <Chakra.Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} variant='outline' leftIcon={<FaPhone />}>Contact me!</Chakra.Button>
                         </Chakra.Box>
                     </Chakra.Box>
                 </Chakra.Card>
             </Chakra.Box>
-            <Chakra.Box mt='3.5vw' p='1.5vw 0' bg='white' display='flex' flexDirection='column' alignItems='center'>
+            {/* Skills */}
+            <Chakra.Box id='skills' mt='3.5vw' p='1.5vw 0' bg='white' display='flex' flexDirection='column' alignItems='center'>
                 <Chakra.Box w='60%' p='1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
                     <Chakra.Heading w='4.2vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaCode />Skills</Chakra.Heading>
                     <Chakra.Text mt='2vw' fontWeight='400'>Skills, tools, and technologies I excel at:</Chakra.Text>
@@ -95,12 +99,13 @@ export default function Contents() {
                     </Chakra.Box>
                 </Chakra.Box>
             </Chakra.Box>
+            {/* Work History */}
             <Chakra.Box mt='3.5vw' display='flex' flexDirection='column' alignItems='center'>
                 <Chakra.Card w='60%' p='1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
                     <Chakra.Heading w='7.2vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaBriefcase size='.8vw' />Work History</Chakra.Heading>
                     <Chakra.Box w='100%' mt='3.5vw' p='0 1vw' display='flex'>
                         <Chakra.Box w='7%' pr='1vw' display='flex' alignItems='start' justifyContent='center'>
-                            <Chakra.Image onClick={() => window.open('https://nemsu-tagbina.edu.ph/')} src={nemsu_icon} alt='Nemsu Logo' w='95%' cursor='pointer' _hover={{w: '100%', boxShadow: '0vw .2vw .5vw rgba(106, 106, 106, 0.31)', borderRadius: 'full', transition: '.3s'}} transition='.2s' />
+                            <Chakra.Image onClick={() => window.open('https://nemsu-tagbina.edu.ph/')} src={nemsu_icon} alt='Nemsu Logo' w='95%' cursor='pointer' _hover={{ w: '100%', boxShadow: '0vw .2vw .5vw rgba(106, 106, 106, 0.31)', borderRadius: 'full', transition: '.3s' }} transition='.2s' />
                         </Chakra.Box>
                         <Chakra.Box w='93%' pl='1vw' borderLeft='.1vw solid #b0b3b5'>
                             <Chakra.Box display='flex' justifyContent='space-between'>
@@ -194,7 +199,8 @@ export default function Contents() {
                     </Chakra.Box>
                 </Chakra.Card>
             </Chakra.Box>
-            <Chakra.Box mt='3.5vw' p='1.5vw 0' display='flex' flexDirection='column' alignItems='center'>
+            {/* Projects */}
+            <Chakra.Box id='projects' mt='3.5vw' p='1.5vw 0' display='flex' flexDirection='column' alignItems='center'>
                 <Chakra.Box w='60%' p='1.5vw 0 1.5vw 1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
                     <Chakra.Heading w='5.2vw' p='.4vw .6vw' variant='content' bg='hover' fontSize='sm' fontWeight='500' textAlign='center' display='flex' alignItems='center' justifyContent='space-between' borderRadius='full'><FaLaptopCode />Projects</Chakra.Heading>
                     <Chakra.Text mt='2vw' fontWeight='400'>A few projects I’ve worked on and learned from:</Chakra.Text>
@@ -226,7 +232,7 @@ export default function Contents() {
                         <Chakra.Box w='48%'>
                             <Chakra.Heading><Chakra.Link href='https://tagongon-elementary-school.onrender.com/' isExternal>Tagongon Elementary School Profiling System</Chakra.Link></Chakra.Heading>
                             <Chakra.Text mt='.5vw'>
-                                A Teacher Profiling System for Tagongon Elementary School, built with ReactJS and Firebase, 
+                                A Teacher Profiling System for Tagongon Elementary School, built with ReactJS and Firebase,
                                 allowing for efficient and secure management of teacher data.
                             </Chakra.Text>
                             <Chakra.Box mt='1vw' display='flex' flexWrap='wrap'>
@@ -239,10 +245,31 @@ export default function Contents() {
                         </Chakra.Box>
                         <Chakra.Box w='48%'>
                             <Chakra.Card w='100%' h='15vw' bg='none' display='flex' alignItems='center' justifyContent='center' boxShadow='0'>
-                                <Chakra.Image onClick={() => window.open('https://tagongon-elementary-school.onrender.com/')} src={tes} alt='tasetemco' w='90%' h='85%' borderRadius='1vw' cursor='pointer' boxShadow='0vw .2vw .5vw rgba(56, 56, 57, 0.09)' _hover={{ w: '95%', h: '90%', boxShadow: '0vw .2vw .5vw rgba(56, 56, 57, 0.09)', transition: '.3s' }} transition='.2s'/>
+                                <Chakra.Image onClick={() => window.open('https://tagongon-elementary-school.onrender.com/')} src={tes} alt='tasetemco' w='90%' h='85%' borderRadius='1vw' cursor='pointer' boxShadow='0vw .2vw .5vw rgba(56, 56, 57, 0.09)' _hover={{ w: '95%', h: '90%', boxShadow: '0vw .2vw .5vw rgba(56, 56, 57, 0.09)', transition: '.3s' }} transition='.2s' />
                             </Chakra.Card>
                         </Chakra.Box>
                     </Chakra.Box>
+                </Chakra.Box>
+            </Chakra.Box>
+            {/* Contact */}
+            <Chakra.Box id='contact' mt='2.5vw' p='1.5vw 0' bg='white' display='flex' justifyContent='center'>
+                <Chakra.Box w='60%' p='1.5vw 0 1.5vw 1.5vw' display='flex' flexDirection='column' alignItems='flex-start'>
+                    <Chakra.Heading variant='content' textAlign='center' display='flex' alignItems='center'> <Chakra.Text mr='.5vw' fontSize='1vw'><FaHeadset /></Chakra.Text>Feel free to connect</Chakra.Heading>
+                    <Chakra.Text w='65%' mt='1.5vw'>I’d be happy to connect! Whether you’re looking for a developer, have a question, or just want to chat, feel free to reach out.</Chakra.Text>
+                    <Chakra.Box display='flex'>
+                        <Chakra.Card onClick={() => window.open('https://www.facebook.com/denden.caibiganmaltos')} mt='1.5vw' p='.4vw .5vw .4vw .4vw' bg='white' cursor='pointer' _hover={{ bg: 'hover', transition: '.3s' }} transition='.2s'>
+                            <Chakra.Text color='#4267B2' fontWeight='500' display='flex' alignItems='center'><Chakra.Text mr='.3vw' color='#4267B2' fontSize='1.3vw'><FaFacebook /></Chakra.Text>Facebook</Chakra.Text>
+                        </Chakra.Card>
+                        <Chakra.Card onClick={() => window.open('https://www.instagram.com/dens.cm/')} mt='1.5vw' ml='1vw' p='.4vw .5vw .4vw .4vw' bg='white' cursor='pointer' _hover={{ bg: 'hover', transition: '.3s' }} transition='.2s'>
+                            <Chakra.Text color='#C13584' fontWeight='500' display='flex' alignItems='center'><Chakra.Text mr='.3vw' color='#C13584' fontSize='1.3vw'><FaInstagram /></Chakra.Text>Instagram</Chakra.Text>
+                        </Chakra.Card>
+                        <Chakra.Card onClick={() => window.open('https://join.skype.com/invite/vuGNPxmtHd4j')} mt='1.5vw' ml='1vw' p='.4vw .5vw .4vw .4vw' bg='white' cursor='pointer' _hover={{ bg: 'hover', transition: '.3s' }} transition='.2s'>
+                            <Chakra.Text color='#00AFF0' fontWeight='500' display='flex' alignItems='center'><Chakra.Text mr='.3vw' color='#00AFF0' fontSize='1.3vw'><FaSkype /></Chakra.Text>Skype</Chakra.Text>
+                        </Chakra.Card>
+                    </Chakra.Box>
+                    <Chakra.Card mt='1.5vw' p='.4vw .7vw .4vw .7vw'>
+                        <Chakra.Text fontWeight='500' display='flex' alignItems='center'><Chakra.Text mr='.3vw' fontSize='1vw'><IoMail /></Chakra.Text>dens.maltos@gmail.com</Chakra.Text>
+                    </Chakra.Card>
                 </Chakra.Box>
             </Chakra.Box>
         </Chakra.Box>
