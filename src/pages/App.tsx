@@ -1,7 +1,9 @@
 // import React from 'react'
 
-import { Badge, Box, Heading, Highlight, Image, Link, List, Separator, Stack, Text } from "@chakra-ui/react"
-import { BiCodeAlt, BiCodeBlock, BiLogoFacebookCircle, BiLogoGmail, BiSolidBriefcase, BiSupport } from "react-icons/bi"
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/700.css'
+import { Badge, Box, Heading, Image, Link, List, Separator, Stack, Text, Wrap, WrapItem } from "@chakra-ui/react"
+import { BiCodeAlt, BiCodeBlock, BiLogoFacebookCircle, BiLogoGmail, BiLogoLinkedinSquare, BiSolidBriefcase, BiSupport } from "react-icons/bi"
 import Dens from '@/assets/dens.jpg'
 import Sstsco from '@/assets/sstsco.png'
 import Nemsu from '@/assets/nemsu.png'
@@ -18,31 +20,43 @@ import Git from '@/assets/git.png'
 
 export default function App() {
     return (
-        <Box w='100vw' h='100vh' bg='gray.100' display='flex' flexDir={{ base: 'column', lg: 'row' }} scrollBehavior='smooth' overflow='auto' scrollbar='hidden'>
-            <Box w={{ base: '100%', lg: '40%' }} h='100%' p={{ base: '1rem', lg: '1rem 0rem 1rem 1rem' }} display='flex' flexDir='column' alignItems='center' justifyContent='center'>
-                <Stack gap='2rem' w='100%' h='100%' p={{ base: '1rem', lg: '3rem 3rem' }} bg='white' alignItems='center' borderRadius='xl' boxShadow='lg' overflow='auto'>
-                    <Image w='12rem' h='12rem' src={Dens} alt="Dens" border='1rem solid white' borderRadius='full' shadow='lg' />
-                    <Stack gap='0' alignItems='center'>
-                        <Heading fontSize='1.5rem' fontWeight='bold' textTransform='uppercase'>Dens Maltos</Heading>
-                        <Text color='teal' fontSize='1rem' fontWeight='semibold'>Web Developer</Text>
+        <Box w='100vw' h='100vh' bg='gray.100' display='flex' flexDir={{ base: 'column', xl: 'row' }} scrollBehavior='smooth' overflow='auto' scrollbar='hidden'>
+            <Box w={{ base: '100%', xl: '40%' }} p={{ base: '1rem', xl: '1rem 0rem 1rem 1rem' }} display='flex' flexDir='column' alignItems='center' justifyContent='start'>
+                <Stack gap='2rem' w='100%' h='100%' p={{ base: '1rem', xl: '2.5rem' }} bg='white' alignItems='center' borderRadius='xl' boxShadow='lg' overflow='auto'>
+                    <Stack w='100%' direction={{ base: 'column', sm: 'row' }} display='flex' alignItems='center'>
+                        <Image w={{ base: '7rem', sm: '8rem' }} h={{ base: '7rem', sm: '8rem' }} src={Dens} alt="Dens" border={{ base: '.7rem solid white', sm: '.8rem solid white' }} borderRadius='full' shadow='lg' />
+                        <Box gap='0' pl='1.5rem' display='flex' flexDir='column' alignItems={{ base: 'center', sm: 'start' }}>
+                            <Heading fontSize='1.5rem' fontWeight='bold' textTransform='uppercase'>Dens Maltos</Heading>
+                            <Text color='teal' fontSize='1rem' fontWeight='semibold'>Web Developer</Text>
+                        </Box>
                     </Stack>
+
                     <Separator w='100%' h='.1rem' bg='gray.200' variant='solid' borderRadius='full' />
-                    <Text fontSize='1rem' textAlign='justify'>
-                        Web development enthusiast who loves building and creating functional, user-friendly applications.
-                        Skilled in developing MERN stack and .NET applications, and eager to learn new things, especially those
-                        related to programming and application development.
-                    </Text>
+                    <Stack gap='2rem'>
+                        <Text fontSize='1rem' textAlign='justify' lineHeight='1.4rem'>
+                            Hi, I’m Dens! I love creating clean, functional web applications that make things easier and more enjoyable for
+                            people to use. I’m passionate about turning ideas into something that actually works and feels good to interact with.
+                        </Text>
+
+                        <Text fontSize='.9rem' fontStyle='italic' lineHeight='1.4rem'>Coding isn’t just about writing lines of code—it’s about solving problems, being creative, and continuously growing as a developer.</Text>
+                    </Stack>
+
                     <Separator w='100%' h='.1rem' bg='gray.200' variant='solid' borderRadius='full' />
-                    <Stack w='100%' alignItems='center'>
-                        <Heading w='100%' fontSize='1rem' fontWeight='bold' display='flex' alignItems='center' justifyContent='center' gap='.5rem'><BiSupport /> Feel free to connect</Heading>
-                        <Stack direction={{ base: 'column', lg: 'row' }}>
+                    <Stack w='100%' alignItems={{ base: 'column', sm: 'start' }}>
+                        <Heading fontSize='1rem' fontWeight='bold' display='flex' alignItems='center' justifyContent='center' gap='.5rem'><BiSupport /> Feel free to connect</Heading>
+                        <Stack direction={{ base: 'column', sm: 'row' }}>
                             <a href="https://web.facebook.com/denden.caibiganmaltos" >
                                 <Badge w='100%' color='#1877F2' fontSize='.8rem' fontWeight='bold' p='.5rem' bg='white' display='flex' alignItems='center' justifyContent='center' borderRadius='full' boxShadow='sm' _hover={{ bg: 'gray.200', transition: '.2s' }} transition='.2s'>
                                     <BiLogoFacebookCircle /> Facebook
                                 </Badge>
                             </a>
+                            <a href="https://www.linkedin.com/in/dens-maltos" >
+                                <Badge w='100%' color='#0a66c2' fontSize='.8rem' fontWeight='bold' p='.5rem' bg='white' display='flex' alignItems='center' justifyContent='center' borderRadius='full' boxShadow='sm' _hover={{ bg: 'gray.200', transition: '.2s' }} transition='.2s'>
+                                    <BiLogoLinkedinSquare /> LinkedIn
+                                </Badge>
+                            </a>
                             <a>
-                                <Badge fontSize='.8rem' fontWeight='bold' p='.5rem' bg='white' borderRadius='full' boxShadow='sm' _hover={{ bg: 'gray.200', transition: '.2s' }} transition='.2s'>
+                                <Badge w='100%' fontSize='.8rem' fontWeight='bold' p='.5rem' bg='white' display='flex' alignItems='center' justifyContent='center' borderRadius='full' boxShadow='sm' userSelect="text">
                                     <BiLogoGmail /> dens.maltos@gmail.com
                                 </Badge>
                             </a>
@@ -51,7 +65,7 @@ export default function App() {
                 </Stack>
             </Box>
 
-            <Box w={{ base: '100%', lg: '60%' }} h={{ base: '', md: '100%' }} p={{ base: '1rem', lg: '1rem 1rem 1rem 1rem' }} display='flex' flexDirection='column' gap='2.5rem' overflow={{ base: '', lg: 'auto' }}>
+            <Box w={{ base: '100%', xl: '60%' }} h={{ base: '', xl: '100%' }} p={{ base: '1rem', lg: '1rem 1rem 1rem 1rem' }} display='flex' flexDirection='column' gap='2.5rem' overflow={{ base: '', xl: 'auto' }}>
                 <Stack gap='1rem' w='100%' alignItems='start'>
                     <Badge colorPalette='teal' variant='solid' p='.4rem .8rem' fontSize='.8rem' fontWeight='bold' borderRadius='full' boxShadow='md'>
                         <BiSolidBriefcase /> Career Experience
@@ -64,11 +78,11 @@ export default function App() {
                             </a>
                         </Box>
                         <Stack w='90%' gap='0rem'>
-                            <Heading fontSize='.8rem' textTransform='uppercase' display='flex' alignItems='center'>
-                                <Highlight query='Programmer Analyst' styles={{ fontWeight: 'bold', ml: '.5rem' }}>
-                                    (May 2025) Programmer Analyst
-                                </Highlight>
-                            </Heading>
+                            <Stack gap='0' direction={{ base: 'column', md: 'row' }} alignItems='left' justifyContent='space-between'>
+                                <Heading display={{ base: 'flex', md: 'none' }} fontSize='.7rem' textTransform='uppercase'>May 2025 - Present</Heading>
+                                <Heading fontSize='.8rem' fontWeight='bold' textTransform='uppercase'>Programmer Analyst</Heading>
+                                <Heading display={{ base: 'none', md: 'flex' }} fontSize='.8rem' textTransform='uppercase'>May 2025 - Present</Heading>
+                            </Stack>
                             <Text fontSize='.8rem' fontWeight='semibold' fontStyle='italic' textTransform='capitalize'>Simple Softech Solutions Co.</Text>
                             <List.Root pl='2rem' mt='1rem' fontSize='.9rem' textAlign='justify'>
                                 <List.Item>Gather and analyze client requirements to understand business and user needs.</List.Item>
@@ -87,11 +101,11 @@ export default function App() {
                             </a>
                         </Box>
                         <Stack w='90%' gap='0rem'>
-                            <Heading fontSize='.8rem' textTransform='uppercase' display='flex' alignItems='center'>
-                                <Highlight query='Web Developer' styles={{ fontWeight: 'bold', ml: '.5rem', mr: '.5rem' }}>
-                                    (August 2024 - April 2025) Web Developer (Research Project)
-                                </Highlight>
-                            </Heading>
+                            <Stack gap='0' direction={{ base: 'column', md: 'row' }} alignItems='left' justifyContent='space-between'>
+                                <Heading display={{ base: 'flex', md: 'none' }} fontSize='.7rem' textTransform='uppercase'>November 2024 - April 2025</Heading>
+                                <Heading fontSize='.8rem' fontWeight='bold' textTransform='uppercase'>Web Developer (Research Project)</Heading>
+                                <Heading display={{ base: 'none', md: 'flex' }} fontSize='.8rem' textTransform='uppercase'>November 2024 - April 2025</Heading>
+                            </Stack>
                             <Text fontSize='.7rem' fontWeight='semibold' fontStyle='italic' textTransform='capitalize'>North Eastern Mindanao State University</Text>
                             <List.Root pl='2rem' mt='1rem' fontSize='.9rem' textAlign='justify'>
                                 <List.Item>Built a research-driven web application using JavaScript, React, and Firebase.</List.Item>
@@ -108,11 +122,11 @@ export default function App() {
                             </a>
                         </Box>
                         <Stack w='90%' gap='0rem'>
-                            <Heading fontSize='.8rem' textTransform='uppercase' display='flex' alignItems='center'>
-                                <Highlight query='Research Assistant' styles={{ fontWeight: 'bold', ml: '.5rem', mr: '.5rem' }}>
-                                    (August - October 2024) Research Assistant
-                                </Highlight>
-                            </Heading>
+                            <Stack gap='0' direction={{ base: 'column', md: 'row' }} alignItems='left' justifyContent='space-between'>
+                                <Heading display={{ base: 'flex', md: 'none' }} fontSize='.7rem' textTransform='uppercase'>August - October 2024</Heading>
+                                <Heading fontSize='.8rem' fontWeight='bold' textTransform='uppercase'>Research Assistant</Heading>
+                                <Heading display={{ base: 'none', md: 'flex' }} fontSize='.8rem' textTransform='uppercase'>August - October 2024</Heading>
+                            </Stack>
                             <Text fontSize='.7rem' fontWeight='semibold' fontStyle='italic' textTransform='capitalize'>North Eastern Mindanao State University</Text>
                             <List.Root pl='2rem' mt='1rem' fontSize='.9rem' textAlign='justify'>
                                 <List.Item>Converted academic research into practical applications by developing machine learning–driven solutions.</List.Item>
@@ -131,51 +145,28 @@ export default function App() {
 
                     <Stack gap='.5rem' w='100%' bg='white' p='1rem' borderRadius='xl' boxShadow='md'>
                         <Text fontSize='.8rem' fontWeight='semibold' textTransform='uppercase'>Tools and Technologies I Work With:</Text>
-                        <Stack mt='2rem' gap='3rem'>
-                            <Stack direction={{ base: 'column', sm: 'row' }} gap={{ base: '2rem', sm: '0' }} justifyContent='space-around'>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={JS} alt="JS" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>JavaScript</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={ReactJS} alt="ReactJS" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>ReactJS</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={NodeJS} alt="NodeJS" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>NodeJS</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={ExpressJS} alt="ExpressJS" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>ExpressJS</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={ChakraUI} alt="ChakraUI" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>ChakraUI</Text>
-                                </Box>
-                            </Stack>
-                            <Stack direction={{ base: 'column', sm: 'row' }} gap={{ base: '2rem', sm: '0' }} justifyContent='space-around'>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={MongoDB} alt="MongoDB" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>MongoDB</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={Firebase} alt="Firebase" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>Firebase</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={PostgreSQL} alt="PostgreSQL" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>PostgreSQL</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={NetCore} alt="NetCore" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>.Net Core</Text>
-                                </Box>
-                                <Box display='flex' gap='.5rem' flexDir='column' alignItems='center'>
-                                    <Image h='4.5rem' src={Git} alt="Git" borderRadius='xl' />
-                                    <Text fontSize='.8rem' fontWeight='bold'>Git</Text>
-                                </Box>
-                            </Stack>
+                        <Stack m="2rem 0 1rem 0" align="center">
+                            <Wrap rowGap="3rem" gap='2rem' justify='center'>
+                                {[
+                                    { name: "JavaScript", img: JS },
+                                    { name: "ReactJS", img: ReactJS },
+                                    { name: "NodeJS", img: NodeJS },
+                                    { name: "ExpressJS", img: ExpressJS },
+                                    { name: "ChakraUI", img: ChakraUI },
+                                    { name: "MongoDB", img: MongoDB },
+                                    { name: "Firebase", img: Firebase },
+                                    { name: "PostgreSQL", img: PostgreSQL },
+                                    { name: ".NET Core", img: NetCore },
+                                    { name: "Git", img: Git },
+                                ].map((skill) => (
+                                    <WrapItem key={skill.name}>
+                                        <Box display="flex" flexDir="column" alignItems="center" gap=".5rem" textAlign="center">
+                                            <Image h="4.3rem" src={skill.img} alt={skill.name} borderRadius="xl" />
+                                            <Text fontSize=".8rem" fontWeight="bold">{skill.name}</Text>
+                                        </Box>
+                                    </WrapItem>
+                                ))}
+                            </Wrap>
                         </Stack>
                     </Stack>
                 </Stack>
