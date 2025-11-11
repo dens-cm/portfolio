@@ -23,11 +23,11 @@ export default function App() {
         <Box w='100vw' h='100vh' bg='gray.100' display='flex' flexDir={{ base: 'column', xl: 'row' }} scrollBehavior='smooth' overflow='auto' scrollbar='hidden'>
             <Box w={{ base: '100%', xl: '40%' }} p={{ base: '1rem', xl: '1rem 0rem 1rem 1rem' }} display='flex' flexDir='column' alignItems='center' justifyContent='start'>
                 <Stack gap='2rem' w='100%' h='100%' p={{ base: '1rem', xl: '2.5rem' }} bg='white' alignItems='center' borderRadius='xl' boxShadow='lg' overflow='auto'>
-                    <Stack w='100%' direction={{ base: 'column', sm: 'row' }} display='flex' alignItems='center'>
+                    <Stack w='100%' mt={{ base: '1rem', sm: '' }} direction={{ base: 'column', sm: 'row' }} display='flex' alignItems='center'>
                         <Image w={{ base: '7rem', sm: '8rem' }} h={{ base: '7rem', sm: '8rem' }} src={Dens} alt="Dens" border={{ base: '.7rem solid white', sm: '.8rem solid white' }} borderRadius='full' shadow='lg' />
-                        <Box gap='0' pl='1.5rem' display='flex' flexDir='column' alignItems={{ base: 'center', sm: 'start' }}>
-                            <Heading fontSize='1.5rem' fontWeight='bold' textTransform='uppercase'>Dens Maltos</Heading>
-                            <Text color='teal' fontSize='1rem' fontWeight='semibold'>Web Developer</Text>
+                        <Box gap='0' mt={{ base: '1rem', sm: '' }} pl={{ base: '', sm: '1.5rem' }} display='flex' flexDir='column' alignItems={{ base: 'center', sm: 'start' }}>
+                            <Heading fontSize={{ base: '1rem', sm: '1.5rem' }} fontWeight='bold' textTransform='uppercase'>Dens Maltos</Heading>
+                            <Text color='teal' fontSize={{ base: '.9rem', sm: '1rem' }} fontWeight='semibold'>Web Developer</Text>
                         </Box>
                     </Stack>
 
