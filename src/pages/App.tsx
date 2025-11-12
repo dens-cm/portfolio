@@ -38,7 +38,7 @@ export default function App() {
                             people to use. I’m passionate about turning ideas into something that actually works and feels good to interact with.
                         </Text>
 
-                        <Text fontSize='.9rem' fontStyle='italic' lineHeight='1.4rem'>Coding isn’t just about writing lines of code—it’s about solving problems, being creative, and continuously growing as a developer.</Text>
+                        <Text fontSize='.9rem' fontStyle='italic' textAlign='justify' lineHeight='1.4rem'>Coding isn’t just about writing lines of code—it’s about solving problems, being creative, and continuously growing as a developer.</Text>
                     </Stack>
 
                     <Separator w='100%' h='.1rem' bg='gray.200' variant='solid' borderRadius='full' />
