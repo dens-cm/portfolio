@@ -1,16 +1,15 @@
 // import React from 'react'
 
 import { Box, Button, HStack } from "@chakra-ui/react"
+import { BiSolidBarChartAlt2, BiSolidFolderOpen, BiSolidEnvelope } from "react-icons/bi"
 
 export default function Header() {
     return (
-        <Box w='100%' h='3.5rem' m='.7rem 0 0 0' bg='rgba(255, 255, 255, 0)' display='flex' alignItems='center' justifyContent='center' position='absolute'>
-            <HStack h='85%' bg='rgba(255, 255, 255, 0.74)' alignItems='center' justifyContent='center' boxShadow='md' borderRadius='lg'>
-                <Button h='70%' ml='.5rem' size='sm' fontSize='.7rem' variant='ghost' borderRadius='lg'>About Me</Button>
-                <Button h='70%' size='sm' fontSize='.7rem' variant='ghost' borderRadius='lg'>Career Experience</Button>
-                <Button h='70%' size='sm' fontSize='.7rem' variant='ghost' borderRadius='lg'>Skills</Button>
-                <Button h='70%' size='sm' fontSize='.7rem' variant='ghost' borderRadius='lg'>Projects</Button>
-                <Button h='70%' mr='.5rem' size='sm' fontSize='.7rem' variant='ghost' borderRadius='lg'>Contact</Button>
+        <Box zIndex='1' w='100%' h='3.4rem' bg='white' display='flex' alignItems='center' justifyContent='center' position='absolute' boxShadow='sm'>
+            <HStack h='100%' display={{ base: 'none', sm: 'flex' }}>
+                <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidBarChartAlt2/> Career Experience</Button>
+                <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidFolderOpen/> Professional Projects</Button>
+                <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidEnvelope/> Contact</Button>
             </HStack>
         </Box>
     )
