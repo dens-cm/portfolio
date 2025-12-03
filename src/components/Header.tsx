@@ -11,6 +11,11 @@ export default function Header() {
                 <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidFolderOpen/> Professional Projects</Button>
                 <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidEnvelope/> Contact</Button>
             </HStack>
+            <HStack h='100%' display={{ base: 'flex', sm: 'none' }}>
+                <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidBarChartAlt2/> Experience</Button>
+                <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidFolderOpen/> Projects</Button>
+                <Button h='70%' size='sm' fontSize='.8rem' fontWeight='bold' variant='ghost' borderRadius='xl'><BiSolidEnvelope/> Contact</Button>
+            </HStack>
         </Box>
     )
 }

@@ -1,10 +1,14 @@
 // import React from 'react'
 
 import { Avatar, Box, Heading, Highlight, HStack, Image, List, Separator, Stack, Text } from "@chakra-ui/react"
-import { BiLogoFacebookCircle, BiLogoGithub, BiLogoLinkedinSquare, BiSolidEnvelope, BiSolidFolderOpen, BiSolidGraduation, BiSolidMap, BiSolidBarChartAlt2 } from "react-icons/bi"
+import { BiLogoFacebookCircle, BiLogoGithub, BiLogoLinkedinSquare, BiSolidEnvelope, BiSolidFolderOpen, BiSolidGraduation, BiSolidMap, BiSolidBarChartAlt2, BiLinkExternal, BiCodeAlt, BiLogoNodejs, BiLogoGit, BiLogoMongodb } from "react-icons/bi"
+import { SiDotnet } from "react-icons/si"
 import Dens from '@/assets/dens.jpeg'
 import Nemsu from '@/assets/nemsu.png'
-import RcfSample from '@/assets/projects/rcf-sample.png'
+import RcfLogo from '@/assets/projects/randocargoforwarding.png'
+import TesLogo from '@/assets/projects/tes.png'
+import SfaLogo from '@/assets/projects/simplesfa.png'
+import TasetemcoLogo from '@/assets/projects/tasetemco.png'
 
 export default function Contents() {
 
@@ -192,26 +196,179 @@ export default function Contents() {
                         </Box>
 
                         {/* Professional Projects Section */}
-                        <Box>
+                        <Box mt='1rem'>
                             <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidFolderOpen /> Professional Projects</Heading>
                             <Separator />
                             <Heading mt='.5rem' fontSize='.9rem'>Here are several projects that have helped me grow and develop my skills:</Heading>
 
-                            <List.Root p='0 1.5rem' gap='2rem' >
+                            <List.Root p='0 1.5rem' gap={{ base: '1rem', md: '1.5rem' }} >
                                 <List.Item>
-                                    <Text mt='.5rem' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ color: 'blue.700' }}>
-                                        <a href="https://rando-cargo-forwarding.onrender.com/" target="_blank" rel="noopener noreferrer">Rando Cargo Forwarding</a>
+                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
+                                        <a href="https://rando-cargo-forwarding.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Rando Cargo Forwarding <BiLinkExternal /></a>
                                     </Text>
-                                    <Box display='flex' alignItems='start' gap='2.5rem'>
-                                        <Text mt='.5rem' fontSize='.9rem'>
+                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
+                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
                                             A logistics management platform for Rando Cargo Forwarding, enabling streamlined booking, billing, and
                                             delivery tracking workflows.
                                         </Text>
-                                        <Image mt='.5rem' w='40%' src={RcfSample} boxShadow='lg' borderRadius='xl'/>
+                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
+                                        <Box w='100%' h={{ base: '5rem' }} >
+                                            <a href="https://rando-cargo-forwarding.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                                                <Image h='100%' p='.5rem' src={RcfLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
+                                            </a>
+                                        </Box>
+                                    </Box>
+                                </List.Item>
+                                <Separator display={{ base: 'flex', md: 'none' }} w='100%' />
+                                <List.Item>
+                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
+                                        <a href="https://tes-profiling.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Tagongon Elementary Profiling System <BiLinkExternal /></a>
+                                    </Text>
+                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
+                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
+                                            A web-based application designed to manage and secure teacher records and personal information, ensuring
+                                            efficient data handling and safe storage.
+                                        </Text>
+                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
+                                        <Box w='100%' h={{ base: '5rem' }}>
+                                            <a href="https://tes-profiling.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                                                <Image h='100%' p='.5rem' src={TesLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
+                                            </a>
+                                        </Box>
+                                    </Box>
+                                </List.Item>
+                                <Separator display={{ base: 'flex', md: 'none' }} w='100%' />
+                                <List.Item>
+                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
+                                        <a href="https://sfapldt.simplesoftech.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Simple SFA <BiLinkExternal /></a>
+                                    </Text>
+                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
+                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
+                                            A management application designed for a specific company to streamline business operations,
+                                            monitor activities, and support sales-related processes.
+                                        </Text>
+                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
+                                        <Box w='100%' h={{ base: '5rem' }}>
+                                            <a href="https://sfapldt.simplesoftech.com/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                                                <Image h='100%' p='.5rem' src={SfaLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
+                                            </a>
+                                        </Box>
+                                    </Box>
+                                </List.Item>
+                                <Separator display={{ base: 'flex', md: 'none' }} w='100%' />
+                                <List.Item>
+                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
+                                        <a href="https://tasetem.co/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Tasetemco <BiLinkExternal /></a>
+                                    </Text>
+                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
+                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
+                                            A loan application system built with the MERN stack, designed to simplify loan requests and tracking.
+                                            It provides a user-friendly interface, secure authentication, and an efficient process for managing applications and approvals.
+                                        </Text>
+                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
+                                        <Box w='100%' h={{ base: '5rem' }}>
+                                            <a href="https://tasetem.co/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                                                <Image h='100%' p='.5rem' src={TasetemcoLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
+                                            </a>
+                                        </Box>
                                     </Box>
                                 </List.Item>
                             </List.Root>
                         </Box>
+
+                        {/* Tools and Technologies */}
+                        {/* <Box mt='1rem'>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiCodeAlt /> Tools and Technologies</Heading>
+                            <Separator />
+                            <Heading mt='.5rem' fontSize='.9rem' fontWeight='normal' fontStyle='italic'>Common Tools and Technologies I usually use:</Heading>
+                            <Box mt='1rem'>
+                                <Stack direction='row' alignItems='center'>
+                                    <a href="https://nodejs.org/en" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Text color='#215732' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoNodejs /> Node</Text>
+                                    </a>
+                                    <Separator orientation='vertical' h='5' />
+                                    <a href="https://dotnet.microsoft.com/en-us/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Text color='#605ca9' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><SiDotnet /> .Net</Text>
+                                    </a>
+                                    <Separator orientation='vertical' h='5' />
+                                    <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Text color='#F1502F' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGit /> Git</Text>
+                                    </a>
+                                    <Separator orientation='vertical' h='5' />
+                                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Text color='#333' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGithub /> Github</Text>
+                                    </a>
+                                    <Separator orientation='vertical' h='5' />
+                                    <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Text color='#589636' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoMongodb /> MongoDb</Text>
+                                    </a>
+                                </Stack>
+                            </Box>
+                        </Box> */}
+
+                        <Box mt='1rem'>
+                            {/* Section Header */}
+                            <Heading
+                                fontSize='.9rem'
+                                fontWeight='bold'
+                                display='flex'
+                                alignItems='center'
+                                gap='.5rem'
+                            >
+                                <BiCodeAlt /> Tools and Technologies
+                            </Heading>
+                            <Separator mt='2' />
+
+                            {/* Subheading */}
+                            <Heading mt='.5rem' fontSize='.9rem' fontWeight='normal' fontStyle='italic'>
+                                Common Tools and Technologies I usually use:
+                            </Heading>
+
+                            {/* Tools Grid */}
+                            <Box mt='1rem' display='flex' flexWrap='wrap' gap='1rem'>
+                                <a href="https://nodejs.org/en" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} >
+                                    <Text color='#215732' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoNodejs /> Node</Text>
+                                </a>
+                                <Separator orientation='vertical' h='5' />
+                                <a href="https://dotnet.microsoft.com/en-us/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <Text color='#605ca9' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><SiDotnet /> .Net</Text>
+                                </a>
+                                <Separator orientation='vertical' h='5' />
+                                <a
+                                    href="https://git-scm.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                >
+                                    <Text color='#F1502F' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'>
+                                        <BiLogoGit /> Git
+                                    </Text>
+                                </a>
+                                <Separator orientation='vertical' h='5' />
+                                <a
+                                    href="https://github.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                >
+                                    <Text color='#333' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'>
+                                        <BiLogoGithub /> GitHub
+                                    </Text>
+                                </a>
+                                <Separator orientation='vertical' h='5' />
+                                <a
+                                    href="https://www.mongodb.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                >
+                                    <Text color='#589636' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'>
+                                        <BiLogoMongodb /> MongoDB
+                                    </Text>
+                                </a>
+                            </Box>
+                        </Box>
+
                     </Stack>
                 </Box>
             </Box>
