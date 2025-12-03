@@ -4,6 +4,7 @@ import { Avatar, Box, Heading, Highlight, HStack, Image, List, Separator, Stack,
 import { BiLogoFacebookCircle, BiLogoGithub, BiLogoLinkedinSquare, BiSolidEnvelope, BiSolidFolderOpen, BiSolidGraduation, BiSolidMap, BiSolidBarChartAlt2 } from "react-icons/bi"
 import Dens from '@/assets/dens.jpeg'
 import Nemsu from '@/assets/nemsu.png'
+import RcfSample from '@/assets/projects/rcf-sample.png'
 
 export default function Contents() {
 
@@ -100,16 +101,25 @@ export default function Contents() {
                         <Box>
                             <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidBarChartAlt2 /> Career Experience</Heading>
                             <Separator />
-                            <List.Root p='0 1.5rem' gap='2rem' >
+                            <List.Root p='0 1.5rem' gap='2rem'>
                                 <List.Item>
                                     <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['August', 'October', '2024', 'Research Assistant']} styles={{ fontWeight: 'semibold' }}>
-                                            In August 2024, I got my first job at the university where I graduated as a Research Assistant
+                                        <Highlight query={['August', '2024']} styles={{ fontWeight: 'semibold' }}>
+                                            In August 2024, I landed my first job at the
                                         </Highlight>
+                                        {' '}
+                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
+                                            university
+                                        </a>
+                                        {' '}
+                                        <Highlight query={['Research Assistant']} styles={{ fontWeight: 'semibold' }}>
+                                            where I graduated, working as a Research Assistant.
+                                        </Highlight>
+                                        {' '}
                                     </Text>
                                     <Text mt='1rem' fontSize='.9rem' fontStyle='italic'>
                                         <Highlight query='Web Development' styles={{ fontWeight: 'semibold' }}>
-                                            Yes, as a Research Assistant! but the primary focus in on Web Development
+                                            Yes, a Research Assistant! But the primary focus was actually on Web Development.
                                         </Highlight>
                                     </Text>
                                     <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>During this time, my duties are to:</Text>
@@ -123,13 +133,22 @@ export default function Contents() {
 
                                 <List.Item>
                                     <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['November', 'April', '2024', '2025', 'Web Developer']} styles={{ fontWeight: 'semibold' }}>
-                                            At November 2024, I was offered again at the same university where I graduted as a Web Developer!
+                                        <Highlight query={['November', '2024']} styles={{ fontWeight: 'semibold' }}>
+                                            In November 2024, I was offered another position at the same
                                         </Highlight>
+                                        {' '}
+                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
+                                            university
+                                        </a>
+                                        {' '}
+                                        <Highlight query={['Web Developer']} styles={{ fontWeight: 'semibold' }}>
+                                            where I graduated, this time as a Web Developer!
+                                        </Highlight>
+                                        {' '}
                                     </Text>
                                     <Text mt='1rem' fontSize='.9rem' fontStyle='italic'>
                                         <Highlight query='Web Development' styles={{ fontWeight: 'semibold' }}>
-                                            This oppotunity allowed me to focus and expand my domain on Web Developent.
+                                            This opportunity allowed me to focus more deeply and expand my skills in Web Development.
                                         </Highlight>
                                     </Text>
                                     <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>This time, my duties are to:</Text>
@@ -139,27 +158,59 @@ export default function Contents() {
                                         <List.Item>Ensured application compliance with study protocols, supporting successful completion of the research paper.</List.Item>
                                     </List.Root>
                                 </List.Item>
-                                
+
                                 <List.Item>
                                     <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['November', 'April', '2024', '2025', 'Web Developer']} styles={{ fontWeight: 'semibold' }}>
-                                            On May 2025, I left my current work and venture more on a job where I can expand and learn more about Web Development.
+                                        <Highlight query={['May', '2025', 'Web Development']} styles={{ fontWeight: 'semibold' }}>
+                                            In May 2025, I left my previous role to pursue a career where I could further grow and expand my skills in Web Development.
                                         </Highlight>
                                     </Text>
-                                    <Text mt='1rem' fontSize='.9rem'>
-                                        <Highlight query={['Programmer Analyst', 'Simple Softech Solutions Co.']} styles={{ fontWeight: 'semibold' }}>
-                                            Luckily, I was hired as a Programmer Analyst at Simple Softech Solutions Co. at the same month (May).
+                                    <Text mt='.5rem' fontSize='.9rem'>
+                                        <Highlight query={['Programmer Analyst']} styles={{ fontWeight: 'semibold' }}>
+                                            Fortunately, I was hired as a Programmer Analyst at
                                         </Highlight>
+                                        {' '}
+                                        <a href="https://simplesoftechsolutionsco.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
+                                            Simple Softech Solutions Co.
+                                        </a>
+                                        {' '}
+                                        <Highlight query={['May']} styles={{ fontWeight: 'semibold' }}>
+                                            within the same month.
+                                        </Highlight>
+                                        {' '}
                                     </Text>
-                                    <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>This time, my duties are to:</Text>
+                                    <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>This role allowed me to:</Text>
                                     <List.Root p='0 1.5rem' fontSize='.9rem'>
-                                        <List.Item>Built a research-driven web applications (yeah, more research projects).</List.Item>
-                                        <List.Item>Collaborated with team members to translate research requirements into functional features.</List.Item>
-                                        <List.Item>Ensured application compliance with study protocols, supporting successful completion of the research paper.</List.Item>
+                                        <List.Item>Gather and analyze client requirements to understand business and user needs.</List.Item>
+                                        <List.Item>Design and develop applications that provide tailored solutions to client problems.</List.Item>
+                                        <List.Item>Collaborate with clients and team members to ensure applications meet functional and usability standards.</List.Item>
+                                        <List.Item>Implement and maintain applications using modern web technologies.</List.Item>
+                                        <List.Item>Continuously explore new tools and technologies to improve development efficiency and solution quality.</List.Item>
                                     </List.Root>
                                 </List.Item>
                             </List.Root>
+                        </Box>
 
+                        {/* Professional Projects Section */}
+                        <Box>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidFolderOpen /> Professional Projects</Heading>
+                            <Separator />
+                            <Heading mt='.5rem' fontSize='.9rem'>Here are several projects that have helped me grow and develop my skills:</Heading>
+
+                            <List.Root p='0 1.5rem' gap='2rem' >
+                                <List.Item>
+                                    <Text mt='.5rem' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ color: 'blue.700' }}>
+                                        <a href="https://rando-cargo-forwarding.onrender.com/" target="_blank" rel="noopener noreferrer">Rando Cargo Forwarding</a>
+                                    </Text>
+                                    <Box display='flex' alignItems='start' gap='2.5rem'>
+                                        <Text mt='.5rem' fontSize='.9rem'>
+                                            A logistics management platform for Rando Cargo Forwarding, enabling streamlined booking, billing, and
+                                            delivery tracking workflows.
+                                        </Text>
+                                        <Image mt='.5rem' w='40%' src={RcfSample} boxShadow='lg' borderRadius='xl'/>
+                                    </Box>
+                                </List.Item>
+                            </List.Root>
                         </Box>
                     </Stack>
                 </Box>
