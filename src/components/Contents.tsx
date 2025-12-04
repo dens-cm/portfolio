@@ -1,8 +1,10 @@
-// import React from 'react'
-
-import { Avatar, Box, Heading, Highlight, HStack, Image, List, Separator, Stack, Text } from "@chakra-ui/react"
-import { BiLogoFacebookCircle, BiLogoGithub, BiLogoLinkedinSquare, BiSolidEnvelope, BiSolidFolderOpen, BiSolidGraduation, BiSolidMap, BiSolidBarChartAlt2, BiLinkExternal, BiCodeAlt, BiLogoNodejs, BiLogoGit, BiLogoMongodb } from "react-icons/bi"
+import React from 'react'
+import emailjs from 'emailjs-com'
+import { Avatar, Box, Button, Heading, Highlight, HStack, Image, List, Separator, Stack, Text, Textarea } from "@chakra-ui/react"
+import { BiLogoFacebookCircle, BiLogoGithub, BiLogoLinkedinSquare, BiSolidFolderOpen, BiSolidGraduation, BiSolidMap, BiSolidBarChartAlt2, BiLinkExternal, BiCodeAlt, BiLogoNodejs, BiLogoGit, BiLogoMongodb, BiSolidEnvelope, BiSupport, BiSolidMessageSquareDots } from "react-icons/bi"
 import { SiDotnet } from "react-icons/si"
+import { toaster } from "@/components/ui/toaster"
+import Footer from '@/components/Footer'
 import Dens from '@/assets/dens.jpeg'
 import Nemsu from '@/assets/nemsu.png'
 import RcfLogo from '@/assets/projects/randocargoforwarding.png'
@@ -10,7 +12,33 @@ import TesLogo from '@/assets/projects/tes.png'
 import SfaLogo from '@/assets/projects/simplesfa.png'
 import TasetemcoLogo from '@/assets/projects/tasetemco.png'
 
-export default function Contents() {
+interface ContentsProps {
+    careerRef: React.RefObject<HTMLDivElement>
+    projectsRef: React.RefObject<HTMLDivElement>
+    contactRef: React.RefObject<HTMLDivElement>
+}
+
+export default function Contents({ careerRef, projectsRef, contactRef }: ContentsProps) {
+
+    const [message, setMessage] = React.useState("")
+    const [loading, setLoading] = React.useState<boolean>(false)
+    const handleSend = () => {
+        if (!message.trim()) {
+            toaster.create({ title: 'Wait!', description: `Message cannot be empty`, type: 'warning', duration: 3000 })
+            return
+        }
+
+        setLoading(true)
+        emailjs.send("service_46nvv7k", "template_q38227z", { message }, "v31leT7Ye3YdBmfXp").then(() => {
+            toaster.create({ title: 'Message Sent!', description: `Message sent successfully.`, type: 'success', duration: 3000 })
+            setMessage("")
+            setLoading(false)
+        }).catch((err) => {
+            console.error(err)
+            toaster.create({ title: 'Failed', description: `${err.message}`, type: 'error', duration: 3000 })
+            setLoading(false)
+        })
+    }
 
     return (
         <Box w='100%' h='100%' p={{ base: '4.4rem 1rem 1rem 1rem', sm: '7rem 0' }} display='flex' flexDir='column' alignItems='center' overflow='auto' scrollbar='hidden'>
@@ -56,12 +84,6 @@ export default function Contents() {
                                     <BiLogoGithub /> Github
                                 </Text>
                             </a>
-                            <Separator orientation='vertical' h='5' />
-                            <a>
-                                <Text fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.3rem'>
-                                    <BiSolidEnvelope /> Contact
-                                </Text>
-                            </a>
                         </HStack>
                     </Box>
 
@@ -102,7 +124,7 @@ export default function Contents() {
                         </Box>
 
                         {/* Career Experience Section */}
-                        <Box>
+                        <Box ref={careerRef} style={{ scrollMarginTop: '4rem' }}>
                             <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidBarChartAlt2 /> Career Experience</Heading>
                             <Separator />
                             <List.Root p='0 1.5rem' gap='2rem'>
@@ -196,7 +218,7 @@ export default function Contents() {
                         </Box>
 
                         {/* Professional Projects Section */}
-                        <Box mt='1rem'>
+                        <Box ref={projectsRef} style={{ scrollMarginTop: '4rem' }} mt='1rem'>
                             <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidFolderOpen /> Professional Projects</Heading>
                             <Separator />
                             <Heading mt='.5rem' fontSize='.9rem'>Here are several projects that have helped me grow and develop my skills:</Heading>
@@ -277,54 +299,10 @@ export default function Contents() {
                         </Box>
 
                         {/* Tools and Technologies */}
-                        {/* <Box mt='1rem'>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiCodeAlt /> Tools and Technologies</Heading>
-                            <Separator />
-                            <Heading mt='.5rem' fontSize='.9rem' fontWeight='normal' fontStyle='italic'>Common Tools and Technologies I usually use:</Heading>
-                            <Box mt='1rem'>
-                                <Stack direction='row' alignItems='center'>
-                                    <a href="https://nodejs.org/en" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text color='#215732' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoNodejs /> Node</Text>
-                                    </a>
-                                    <Separator orientation='vertical' h='5' />
-                                    <a href="https://dotnet.microsoft.com/en-us/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text color='#605ca9' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><SiDotnet /> .Net</Text>
-                                    </a>
-                                    <Separator orientation='vertical' h='5' />
-                                    <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text color='#F1502F' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGit /> Git</Text>
-                                    </a>
-                                    <Separator orientation='vertical' h='5' />
-                                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text color='#333' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGithub /> Github</Text>
-                                    </a>
-                                    <Separator orientation='vertical' h='5' />
-                                    <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text color='#589636' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoMongodb /> MongoDb</Text>
-                                    </a>
-                                </Stack>
-                            </Box>
-                        </Box> */}
-
                         <Box mt='1rem'>
-                            {/* Section Header */}
-                            <Heading
-                                fontSize='.9rem'
-                                fontWeight='bold'
-                                display='flex'
-                                alignItems='center'
-                                gap='.5rem'
-                            >
-                                <BiCodeAlt /> Tools and Technologies
-                            </Heading>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiCodeAlt /> Tools and Technologies</Heading>
                             <Separator mt='2' />
-
-                            {/* Subheading */}
-                            <Heading mt='.5rem' fontSize='.9rem' fontWeight='normal' fontStyle='italic'>
-                                Common Tools and Technologies I usually use:
-                            </Heading>
-
-                            {/* Tools Grid */}
+                            <Heading mt='.5rem' fontSize='.9rem' fontWeight='normal' fontStyle='italic'>Common Tools and Technologies I usually use:</Heading>
                             <Box mt='1rem' display='flex' flexWrap='wrap' gap='1rem'>
                                 <a href="https://nodejs.org/en" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} >
                                     <Text color='#215732' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoNodejs /> Node</Text>
@@ -334,44 +312,64 @@ export default function Contents() {
                                     <Text color='#605ca9' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><SiDotnet /> .Net</Text>
                                 </a>
                                 <Separator orientation='vertical' h='5' />
-                                <a
-                                    href="https://git-scm.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                                >
-                                    <Text color='#F1502F' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'>
-                                        <BiLogoGit /> Git
-                                    </Text>
+                                <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <Text color='#F1502F' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGit /> Git</Text>
                                 </a>
                                 <Separator orientation='vertical' h='5' />
-                                <a
-                                    href="https://github.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                                >
-                                    <Text color='#333' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'>
-                                        <BiLogoGithub /> GitHub
-                                    </Text>
+                                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <Text color='#333' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGithub /> GitHub</Text>
                                 </a>
                                 <Separator orientation='vertical' h='5' />
-                                <a
-                                    href="https://www.mongodb.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                                >
-                                    <Text color='#589636' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'>
-                                        <BiLogoMongodb /> MongoDB
-                                    </Text>
+                                <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <Text color='#589636' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoMongodb /> MongoDB</Text>
                                 </a>
+                            </Box>
+                        </Box>
+                    </Stack>
+                </Box>
+            </Box>
+
+            <Box ref={contactRef} w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }} mt='3rem' gap='1rem' display='flex' flexDir='column' alignItems='start'>
+                <Heading bg='white' p='.1rem 1rem' fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.5rem' borderRadius='full' boxShadow='lg'><BiSolidEnvelope /> Contact</Heading>
+
+                <Box bg='white' w='100%' p='2rem' borderRadius='xl' boxShadow='md'>
+                    <Stack gap='1.5rem'>
+
+                        <Box>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSupport /> Let's Connect!</Heading>
+                            <Separator />
+                            <Text mt='.5rem' fontSize='.8rem' fontWeight='semibold'>Do you have a project in mind?</Text>
+                            <Text mt='.5rem' fontSize='.8rem'>Hit the send button to get in touch—let’s build something creative together!</Text>
+                            <Text fontSize='.8rem' fontStyle='italic'>
+                                <Highlight query={'dens.maltos@gmail.com'} styles={{ fontWeight: 'semibold' }}>
+                                    You can reach me anytime at: dens.maltos@gmail.com
+                                </Highlight>
+                            </Text>
+                        </Box>
+
+                        <HStack>
+                            <Separator flex="1" />
+                            <Text fontSize='.8rem' fontStyle='italic' flexShrink="0">or</Text>
+                            <Separator flex="1" />
+                        </HStack>
+
+                        <Box>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidMessageSquareDots /> Contact me Now!</Heading>
+                            <Box mt='1rem'>
+                                <Textarea required value={message} onChange={(e) => setMessage(e.target.value)} fontSize='.8rem' fontWeight='semibold' borderRadius='lg' placeholder="Your message here." />
+                                <Box w='100%' display='flex' justifyContent='right'>
+                                    <Button onClick={handleSend} loading={loading} loadingText='Sending' size='xs' colorPalette='blue' borderRadius='lg'><BiSolidEnvelope />Send</Button>
+                                </Box>
                             </Box>
                         </Box>
 
                     </Stack>
                 </Box>
             </Box>
-        </Box>
+
+            <Box w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }} mt='3rem' gap='1rem' display='flex' flexDir='column' alignItems='start'>
+                <Footer />
+            </Box>
+        </Box >
     )
 }

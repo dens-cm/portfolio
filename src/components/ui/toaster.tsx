@@ -9,8 +9,9 @@ import {
   createToaster,
 } from "@chakra-ui/react"
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const toaster = createToaster({
-  placement: "bottom-end",
+  placement: "top",
   pauseOnPageIdle: true,
 })
 
@@ -19,7 +20,7 @@ export const Toaster = () => {
     <Portal>
       <ChakraToaster toaster={toaster} insetInline={{ mdDown: "4" }}>
         {(toast) => (
-          <Toast.Root width={{ md: "sm" }}>
+          <Toast.Root width={{ md: "sm" }} borderRadius='lg'>
             {toast.type === "loading" ? (
               <Spinner size="sm" color="blue.solid" />
             ) : (
