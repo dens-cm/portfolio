@@ -5,7 +5,7 @@ import { Box, Stack } from "@chakra-ui/react";
 
 export default function Home() {
 
-    const careerRef = React.useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+    const workRef = React.useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
     const projectsRef = React.useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
     const contactRef = React.useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
 
@@ -16,8 +16,8 @@ export default function Home() {
     return (
         <Box w='100vw' h='100vh' bg='rgba(237, 237, 237, 0.84)'>
             <Stack gap='0' w='100%' h='100%'>
-                <Header scrollToCareer={() => scrollTo(careerRef)} scrollToProjects={() => scrollTo(projectsRef)} scrollToContact={() => scrollTo(contactRef)} />
-                <Contents careerRef={careerRef} projectsRef={projectsRef} contactRef={contactRef}/>
+                <Header scrollToWork={() => scrollTo(workRef)} scrollToProjects={() => scrollTo(projectsRef)} scrollToContact={() => scrollTo(contactRef)} />
+                <Contents workRef={workRef} projectsRef={projectsRef} contactRef={contactRef}/>
             </Stack>
         </Box>
     )

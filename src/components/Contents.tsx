@@ -13,12 +13,12 @@ import SfaLogo from '@/assets/projects/simplesfa.png'
 import TasetemcoLogo from '@/assets/projects/tasetemco.png'
 
 interface ContentsProps {
-    careerRef: React.RefObject<HTMLDivElement>
+    workRef: React.RefObject<HTMLDivElement>
     projectsRef: React.RefObject<HTMLDivElement>
     contactRef: React.RefObject<HTMLDivElement>
 }
 
-export default function Contents({ careerRef, projectsRef, contactRef }: ContentsProps) {
+export default function Contents({ workRef, projectsRef, contactRef }: ContentsProps) {
 
     const [message, setMessage] = React.useState("")
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -124,94 +124,47 @@ export default function Contents({ careerRef, projectsRef, contactRef }: Content
                         </Box>
 
                         {/* Career Experience Section */}
-                        <Box ref={careerRef} style={{ scrollMarginTop: '4rem' }}>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidBarChartAlt2 /> Career Experience</Heading>
+                        <Box ref={workRef} style={{ scrollMarginTop: '4rem' }}>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidBarChartAlt2 /> Work Experience</Heading>
                             <Separator />
                             <List.Root p='0 1.5rem' gap='2rem'>
                                 <List.Item>
-                                    <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['August', '2024']} styles={{ fontWeight: 'semibold' }}>
-                                            In August 2024, I landed my first job at the
-                                        </Highlight>
-                                        {' '}
-                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-                                            university
-                                        </a>
-                                        {' '}
-                                        <Highlight query={['Research Assistant']} styles={{ fontWeight: 'semibold' }}>
-                                            where I graduated, working as a Research Assistant.
-                                        </Highlight>
-                                        {' '}
-                                    </Text>
-                                    <Text mt='1rem' fontSize='.9rem' fontStyle='italic'>
-                                        <Highlight query='Web Development' styles={{ fontWeight: 'semibold' }}>
-                                            Yes, a Research Assistant! But the primary focus was actually on Web Development.
-                                        </Highlight>
-                                    </Text>
-                                    <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>During this time, my duties are to:</Text>
-                                    <List.Root p='0 1.5rem' fontSize='.9rem'>
-                                        <List.Item>Converted academic research into practical applications by developing machine learning–driven solutions.</List.Item>
-                                        <List.Item>Trained and deployed machine learning models using Python, solving domain-specific problems.</List.Item>
-                                        <List.Item>Implemented user-facing web applications by integrating ML models into a React-based frontend.</List.Item>
-                                        <List.Item>Collaborated with researchers to document methodologies, ensuring technical accuracy and reproducibility.</List.Item>
-                                    </List.Root>
-                                </List.Item>
-
-                                <List.Item>
-                                    <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['November', '2024']} styles={{ fontWeight: 'semibold' }}>
-                                            In November 2024, I was offered another position at the same
-                                        </Highlight>
-                                        {' '}
-                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-                                            university
-                                        </a>
-                                        {' '}
-                                        <Highlight query={['Web Developer']} styles={{ fontWeight: 'semibold' }}>
-                                            where I graduated, this time as a Web Developer!
-                                        </Highlight>
-                                        {' '}
-                                    </Text>
-                                    <Text mt='1rem' fontSize='.9rem' fontStyle='italic'>
-                                        <Highlight query='Web Development' styles={{ fontWeight: 'semibold' }}>
-                                            This opportunity allowed me to focus more deeply and expand my skills in Web Development.
-                                        </Highlight>
-                                    </Text>
-                                    <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>This time, my duties are to:</Text>
-                                    <List.Root p='0 1.5rem' fontSize='.9rem'>
-                                        <List.Item>Built a research-driven web applications (yeah, more research projects).</List.Item>
-                                        <List.Item>Collaborated with team members to translate research requirements into functional features.</List.Item>
-                                        <List.Item>Ensured application compliance with study protocols, supporting successful completion of the research paper.</List.Item>
-                                    </List.Root>
-                                </List.Item>
-
-                                <List.Item>
-                                    <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['May', '2025', 'Web Development']} styles={{ fontWeight: 'semibold' }}>
-                                            In May 2025, I left my previous role to pursue a career where I could further grow and expand my skills in Web Development.
-                                        </Highlight>
-                                    </Text>
-                                    <Text mt='.5rem' fontSize='.9rem'>
-                                        <Highlight query={['Programmer Analyst']} styles={{ fontWeight: 'semibold' }}>
-                                            Fortunately, I was hired as a Programmer Analyst at
-                                        </Highlight>
-                                        {' '}
+                                    <Stack mt='.5rem' gap='0rem'>
+                                        <Box display='flex' flexDir={{ base: 'column', lg: 'row' }} alignItems={{ base: 'left', lg: 'center' }} justifyContent={{ lg: 'space-between' }}>
+                                            <Text fontSize='.9rem' fontWeight='semibold'>Programmer Analyst</Text>
+                                            <Text fontSize='.8rem' fontWeight='normal' fontStyle='italic'>May 2025 - January 2026</Text>
+                                        </Box>
                                         <a href="https://simplesoftechsolutionsco.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-                                            Simple Softech Solutions Co.
+
+                                            <Text fontSize='.8rem' fontWeight='normal'>Simple Softech Solutions Co.</Text>
                                         </a>
-                                        {' '}
-                                        <Highlight query={['May']} styles={{ fontWeight: 'semibold' }}>
-                                            within the same month.
-                                        </Highlight>
-                                        {' '}
-                                    </Text>
-                                    <Text mt='.1rem' fontSize='.9rem' fontWeight='semibold'>This role allowed me to:</Text>
-                                    <List.Root p='0 1.5rem' fontSize='.9rem'>
-                                        <List.Item>Gather and analyze client requirements to understand business and user needs.</List.Item>
-                                        <List.Item>Design and develop applications that provide tailored solutions to client problems.</List.Item>
-                                        <List.Item>Collaborate with clients and team members to ensure applications meet functional and usability standards.</List.Item>
-                                        <List.Item>Implement and maintain applications using modern web technologies.</List.Item>
-                                        <List.Item>Continuously explore new tools and technologies to improve development efficiency and solution quality.</List.Item>
+                                    </Stack>
+                                    <List.Root mt='1rem' p='0 1.5rem' fontSize='.9rem'>
+                                        <List.Item>Gathered and analyzed client requirements to translate business needs into functional web application features.</List.Item>
+                                        <List.Item>Designed and developed tailored solutions using modern web technologies, focusing on usability and maintainability.</List.Item>
+                                        <List.Item>Collaborated with clients and internal team members to ensure applications met functional and quality standards.</List.Item>
+                                        <List.Item>Implemented and maintained application features while continuously improving development workflows and tools.</List.Item>
+                                    </List.Root>
+                                </List.Item>
+                                <List.Item>
+                                    <Stack mt='.5rem' gap='0rem'>
+                                        <Box display='flex' flexDir={{ base: 'column', lg: 'row' }} alignItems={{ base: 'left', lg: 'center' }} justifyContent={{ lg: 'space-between' }}>
+                                            <Text fontSize='.9rem' fontWeight='semibold'>
+                                                <Highlight query={'(Research Project)'} styles={{ fontWeight: 'normal' }}>
+                                                    Web Developer (Research Project)
+                                                </Highlight>
+                                            </Text>
+                                            <Text fontSize='.8rem' fontWeight='normal' fontStyle='italic'>August 2024 - April 2025</Text>
+                                        </Box>
+                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
+                                            <Text fontSize='.8rem' fontWeight='normal'>North Eastern Mindanao State University</Text>
+                                        </a>
+                                    </Stack>
+                                    <List.Root mt='1rem' p='0 1.5rem' fontSize='.9rem'>
+                                        <List.Item>Built and maintained a research-driven web application to support data collection and analysis for an academic study.</List.Item>
+                                        <List.Item>Worked closely with research team members to convert study requirements into functional system features.</List.Item>
+                                        <List.Item>Ensured application compliance with research protocols, contributing to the successful completion of the research paper.</List.Item>
+                                        <List.Item>Supported iterative improvements based on research findings and user feedback.</List.Item>
                                     </List.Root>
                                 </List.Item>
                             </List.Root>
@@ -219,7 +172,7 @@ export default function Contents({ careerRef, projectsRef, contactRef }: Content
 
                         {/* Professional Projects Section */}
                         <Box ref={projectsRef} style={{ scrollMarginTop: '4rem' }} mt='1rem'>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidFolderOpen /> Professional Projects</Heading>
+                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidFolderOpen /> Career Projects</Heading>
                             <Separator />
                             <Heading mt='.5rem' fontSize='.9rem'>Here are several projects that have helped me grow and develop my skills:</Heading>
 
