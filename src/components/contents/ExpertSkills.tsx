@@ -36,6 +36,7 @@ export default function ExpertSkills({
   return (
     <Skeleton loading={loading} variant="pulse" borderRadius="3xl" height="100%">
       <Box 
+        className="expert-skills-card"
         bg={cardBg} 
         border="1px solid"
         borderColor={cardBorder}

@@ -411,6 +411,43 @@ ${educationMarkdown}
             margin: 0 !important;
           }
 
+          /* Modern flex layout for seamless print ordering */
+          .resume-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.5rem !important;
+            width: 100% !important;
+          }
+
+          /* Dissolve grouped grid column for independent print ordering */
+          .profile-education-wrapper {
+            display: contents !important;
+          }
+
+          /* Linear section ordering: Profile Card -> Work History -> Education -> Skills -> Projects */
+          .profile-education-wrapper > *:first-of-type {
+            order: 1 !important;
+          }
+
+          .work-history-wrapper {
+            order: 2 !important;
+            width: 100% !important;
+          }
+
+          .profile-education-wrapper > *:nth-of-type(2) {
+            order: 3 !important;
+          }
+
+          .skills-wrapper {
+            order: 4 !important;
+            width: 100% !important;
+          }
+
+          .projects-wrapper {
+            order: 5 !important;
+            width: 100% !important;
+          }
+
           /* Convert Sticky Sidecard into executive Resume Header */
           .profile-sidecard {
             width: 100% !important;
@@ -424,12 +461,12 @@ ${educationMarkdown}
             border-bottom: 2px solid #E5E7EB !important;
             border-radius: 0 !important;
             box-shadow: none !important;
-            box-shadow: 0 0 0 0 transparent !important;
             background: transparent !important;
             background-color: transparent !important;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
             padding: 0 0 1rem 0 !important;
+            margin-bottom: 1.5rem !important;
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
@@ -515,32 +552,38 @@ ${educationMarkdown}
             gap: 0.2rem !important;
           }
 
-          /* Force main contents area full-width */
-          .main-contents {
-            width: 100% !important;
-            max-width: 100% !important;
-            gap: 1.2rem !important;
-          }
-
-          /* Resume Sections styling */
-          section, .main-contents section {
+          /* Strip card container borders, shadows, and paddings for seamless presentation */
+          .work-history-card,
+          .education-card,
+          .expert-skills-card,
+          .projects-card {
             border: none !important;
+            border-radius: 0 !important;
             box-shadow: none !important;
+            box-shadow: 0 0 0 0 transparent !important;
             background: transparent !important;
+            background-color: transparent !important;
             padding: 0 !important;
-            margin-bottom: 1rem !important;
+            margin: 0 0 1.5rem 0 !important;
             page-break-inside: avoid !important;
+            break-inside: avoid !important;
           }
 
-          section h2, .main-contents section h2 {
-            font-size: 1.05rem !important;
+          /* Custom printable section headings with clean division lines */
+          .work-history-card h2,
+          .education-card h2,
+          .expert-skills-card h2,
+          .projects-card h2 {
+            font-size: 1.1rem !important;
             font-weight: 800 !important;
             color: #1E3A8A !important;
             border-bottom: 1.5px solid #D1D5DB !important;
             padding-bottom: 0.25rem !important;
-            margin-bottom: 0.6rem !important;
+            margin-bottom: 0.8rem !important;
             text-transform: uppercase !important;
             letter-spacing: 0.5px !important;
+            display: flex !important;
+            align-items: center !important;
           }
 
           /* Experience & Project timeline adaptations */
@@ -566,6 +609,12 @@ ${educationMarkdown}
             border-radius: 0.4rem !important;
             page-break-inside: avoid !important;
             box-shadow: none !important;
+          }
+
+          .experience-item,
+          .education-item {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
           }
         }
       ` }} />
@@ -608,13 +657,14 @@ ${educationMarkdown}
             2. THE DYNAMIC BENTO GRID ENGINE
             ======================================================== */}
         <Grid 
+          className="resume-grid"
           templateColumns="repeat(12, 1fr)" 
           gap="2rem"
           w="100%"
         >
           
           {/* BENTO CARD 1: ACTIVE EXPERIENCE MODULE (Span 7) */}
-          <GridItem colSpan={{ base: 12, lg: 7 }} display="flex" flexDir="column">
+          <GridItem colSpan={{ base: 12, lg: 7 }} display="flex" flexDir="column" className="work-history-wrapper">
             <WorkHistory
               loading={loading}
               data={data}
@@ -627,7 +677,7 @@ ${educationMarkdown}
           </GridItem>
 
           {/* BENTO CARD 2 & 3 Column: PROFILE SIDECARD & EDUCATION (Span 5) */}
-          <GridItem colSpan={{ base: 12, lg: 5 }} display="flex" flexDir="column" gap="2rem">
+          <GridItem colSpan={{ base: 12, lg: 5 }} display="flex" flexDir="column" gap="2rem" className="profile-education-wrapper">
             <ProfileSidecard
               loading={loading}
               data={data}
@@ -653,7 +703,7 @@ ${educationMarkdown}
           </GridItem>
 
           {/* BENTO CARD 4: CATEGORIZED SKILLS NODES (Span 5) */}
-          <GridItem colSpan={{ base: 12, lg: 5 }} display="flex" flexDir="column">
+          <GridItem colSpan={{ base: 12, lg: 5 }} display="flex" flexDir="column" className="skills-wrapper">
             <ExpertSkills
               loading={loading}
               groupedSkills={groupedSkills}
@@ -664,7 +714,7 @@ ${educationMarkdown}
           </GridItem>
 
           {/* BENTO CARD 5: CAREER PROJECTS COMPONENT (Span 7) */}
-          <GridItem colSpan={{ base: 12, lg: 7 }} display="flex" flexDir="column">
+          <GridItem colSpan={{ base: 12, lg: 7 }} display="flex" flexDir="column" className="projects-wrapper">
             <ProjectGrid
               loading={loading}
               data={data}
@@ -694,7 +744,7 @@ ${educationMarkdown}
         </Grid>
 
         {/* Footer block */}
-        <Box w="100%" m=".5rem 0" p='0 0 1rem 0'>
+        <Box className="no-print" w="100%" m=".5rem 0" p='0 0 1rem 0'>
           <Footer />
         </Box>
 

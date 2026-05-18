@@ -35,6 +35,7 @@ export default function WorkHistory({
     <Skeleton loading={loading} variant="pulse" borderRadius="3xl" height="100%">
       <Box 
         ref={workRef}
+        className="work-history-card"
         style={{ scrollMarginTop: '5rem' }}
         bg={cardBg} 
         border="1px solid"
@@ -54,7 +55,7 @@ export default function WorkHistory({
 
         <Box className="experience-timeline" position="relative" pl={{ base: "1rem", sm: "1.8rem" }} borderLeft="2px solid" borderColor={borderLine} ml="0.2rem" py="1" flex="1">
           {data.experience.map((exp, idx) => (
-            <Box key={idx} mb="2.2rem" position="relative" _last={{ mb: "0" }}>
+            <Box key={idx} className="experience-item" mb="2.2rem" position="relative" _last={{ mb: "0" }}>
               
               {/* Interactive Connector Dot */}
               <Box 

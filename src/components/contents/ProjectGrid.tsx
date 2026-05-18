@@ -37,6 +37,7 @@ export default function ProjectGrid({
     <Skeleton loading={loading} variant="pulse" borderRadius="3xl" height="100%">
       <Box 
         ref={projectsRef}
+        className="projects-card"
         style={{ scrollMarginTop: '5rem' }}
         bg={cardBg} 
         border="1px solid"

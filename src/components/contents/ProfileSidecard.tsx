@@ -1,19 +1,19 @@
-import { 
-  Avatar, 
-  Box, 
-  Button, 
-  Heading, 
-  HStack, 
-  Separator, 
-  Stack, 
+import {
+  Avatar,
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Separator,
+  Stack,
   Badge,
   Skeleton
 } from "@chakra-ui/react"
-import { 
-  BiLogoFacebookCircle, 
-  BiLogoGithub, 
-  BiLogoLinkedinSquare, 
-  BiSolidMap, 
+import {
+  BiLogoFacebookCircle,
+  BiLogoGithub,
+  BiLogoLinkedinSquare,
+  BiSolidMap,
   BiCopy,
   BiCheck,
   BiSolidFilePdf
@@ -48,9 +48,9 @@ export default function ProfileSidecard({
 }: ProfileSidecardProps) {
   return (
     <Skeleton loading={loading} variant="pulse" borderRadius="3xl">
-      <Box 
+      <Box
         className="profile-sidecard"
-        bg={cardBg} 
+        bg={cardBg}
         border="1px solid"
         borderColor={cardBorder}
         borderRadius="3xl"
@@ -64,13 +64,13 @@ export default function ProfileSidecard({
       >
         <Box className="profile-header-container" display="flex" flexDir="column" alignItems="center" justifyContent="center" w="100%">
           {/* Pulsing Avatar halo */}
-          <Box 
+          <Box
             className="avatar-halo"
-            borderRadius="full" 
-            p="1" 
-            bgGradient="to-br" 
-            gradientFrom="blue.500" 
-            gradientTo="indigo.600" 
+            borderRadius="full"
+            p="1"
+            bgGradient="to-br"
+            gradientFrom="blue.500"
+            gradientTo="indigo.600"
             boxShadow="xl"
             transition="transform 0.3s ease"
             _hover={{ transform: "scale(1.05)" }}
@@ -85,13 +85,13 @@ export default function ProfileSidecard({
             <Heading className="profile-name" fontSize="1.3rem" fontWeight="extrabold" fontFamily="'Outfit', sans-serif">
               {data.profile?.name || 'Dens Maltos'}
             </Heading>
-            <Badge 
+            <Badge
               className="profile-title-badge"
-              mt="0.4rem" 
-              variant="subtle" 
-              colorPalette="blue" 
-              px="3" 
-              py="0.8" 
+              mt="0.4rem"
+              variant="subtle"
+              colorPalette="blue"
+              px="3"
+              py="0.8"
               borderRadius="full"
               fontWeight="bold"
               textTransform="uppercase"
@@ -134,11 +134,11 @@ export default function ProfileSidecard({
 
         {/* Print Action Stack */}
         <Stack w="100%" gap="2" className="no-print">
-          <Button 
-            onClick={handleCopyATSResume} 
-            w="100%" 
-            size="sm" 
-            colorPalette="blue" 
+          <Button
+            onClick={handleCopyATSResume}
+            w="100%"
+            size="sm"
+            colorPalette="blue"
             variant="outline"
             borderRadius="xl"
             boxShadow="sm"
@@ -153,11 +153,12 @@ export default function ProfileSidecard({
             {copied ? "Copied!" : "Copy ATS-Friendly Resume"}
           </Button>
 
-          <Button 
-            onClick={handleDownloadPDF} 
-            w="100%" 
-            size="sm" 
-            colorPalette="indigo" 
+          <Button
+            hidden
+            onClick={handleDownloadPDF}
+            w="100%"
+            size="sm"
+            colorPalette="indigo"
             variant="subtle"
             borderRadius="xl"
             boxShadow="sm"

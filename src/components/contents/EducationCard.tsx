@@ -33,6 +33,7 @@ export default function EducationCard({
   return (
     <Skeleton loading={loading} variant="pulse" borderRadius="3xl">
       <Box 
+        className="education-card"
         bg={cardBg} 
         border="1px solid"
         borderColor={cardBorder}
@@ -50,7 +51,7 @@ export default function EducationCard({
           {data.education.map((edu, idx) => {
             const schoolLogo = getAssetUrl(edu.logo_url)
             return (
-              <Box key={idx} display="flex" alignItems="center" justifyContent="space-between" gap="1rem">
+              <Box key={idx} className="education-item" display="flex" alignItems="center" justifyContent="space-between" gap="1rem">
                 <Box>
                   <Text fontSize="0.9rem" fontWeight="extrabold" color="blue.500" _hover={{ textDecoration: "underline" }}>
                     <a href={edu.school_url} target="_blank" rel="noopener noreferrer">

@@ -52,23 +52,23 @@ export default function Login() {
   }
 
   return (
-    <Box 
-      w="100vw" 
-      h="100vh" 
-      bg={bg} 
-      display="flex" 
-      alignItems="center" 
-      justifyContent="center" 
+    <Box
+      w="100vw"
+      h="100vh"
+      bg={bg}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       position="relative"
       px="4"
       transition="background 0.3s ease"
     >
       {/* Top Controls */}
       <Box position="absolute" top="1.5rem" left="1.5rem">
-        <Button 
-          onClick={() => navigate('/')} 
-          size="sm" 
-          variant="ghost" 
+        <Button
+          onClick={() => navigate('/')}
+          size="sm"
+          variant="ghost"
           borderRadius="xl"
           display="flex"
           alignItems="center"
@@ -82,7 +82,7 @@ export default function Login() {
       </Box>
 
       {/* Login Card */}
-      <Box 
+      <Box
         w="100%"
         maxW="26rem"
         bg={cardBg}
@@ -107,15 +107,16 @@ export default function Login() {
             {/* Email Field */}
             <Field.Root>
               <Field.Label fontSize="0.8rem" fontWeight="bold">Email Address</Field.Label>
-              <Box display="flex" alignItems="center" position="relative">
+              <Box w='100%' display="flex" alignItems="center" position="relative">
                 <Box position="absolute" left="3.5" zIndex="1" color={textMuted}>
                   <BiUser size="1.1rem" />
                 </Box>
-                <Input 
-                  type="email" 
+                <Input
+                  w='100%'
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="dens.maltos@gmail.com" 
+                  placeholder="dens.maltos@gmail.com"
                   pl="10"
                   borderRadius="xl"
                   fontSize="0.85rem"
@@ -127,15 +128,16 @@ export default function Login() {
             {/* Password Field */}
             <Field.Root>
               <Field.Label fontSize="0.8rem" fontWeight="bold">Password</Field.Label>
-              <Box display="flex" alignItems="center" position="relative">
+              <Box w='100%' display="flex" alignItems="center" position="relative">
                 <Box position="absolute" left="3.5" zIndex="1" color={textMuted}>
                   <BiLockAlt size="1.1rem" />
                 </Box>
-                <Input 
-                  type="password" 
+                <Input
+                w='100%' 
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••" 
+                  placeholder="••••••••"
                   pl="10"
                   borderRadius="xl"
                   fontSize="0.85rem"
@@ -145,8 +147,8 @@ export default function Login() {
             </Field.Root>
           </Stack>
 
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             loading={loading}
             loadingText="Authenticating"
             colorPalette="blue"
