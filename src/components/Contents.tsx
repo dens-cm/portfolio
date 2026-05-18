@@ -1,328 +1,704 @@
-import React from 'react'
+import React, { useState } from 'react'
 import emailjs from 'emailjs-com'
-import { Avatar, Box, Button, Heading, Highlight, HStack, Image, List, Separator, Stack, Text, Textarea } from "@chakra-ui/react"
-import { BiLogoFacebookCircle, BiLogoGithub, BiLogoLinkedinSquare, BiSolidFolderOpen, BiSolidGraduation, BiSolidMap, BiSolidBarChartAlt2, BiLinkExternal, BiCodeAlt, BiLogoNodejs, BiLogoGit, BiLogoMongodb, BiSolidEnvelope, BiSupport, BiSolidMessageSquareDots } from "react-icons/bi"
-import { SiDotnet } from "react-icons/si"
+import { 
+  Box, 
+  Grid,
+  GridItem
+} from "@chakra-ui/react"
 import { toaster } from "@/components/ui/toaster"
 import Footer from '@/components/Footer'
-import Dens from '@/assets/dens.jpeg'
-import Nemsu from '@/assets/nemsu.png'
-import RcfLogo from '@/assets/projects/randocargoforwarding.png'
-import TesLogo from '@/assets/projects/tes.png'
-import SfaLogo from '@/assets/projects/simplesfa.png'
-import TasetemcoLogo from '@/assets/projects/tasetemco.png'
+import { usePortfolioData, LOCAL_ASSETS } from '@/hooks/usePortfolioData'
+import { useColorModeValue } from '@/components/ui/color-mode'
+
+// Import decomposed sub-components
+import HeroBrand from './contents/HeroBrand'
+import WorkHistory from './contents/WorkHistory'
+import ProfileSidecard from './contents/ProfileSidecard'
+import EducationCard from './contents/EducationCard'
+import ExpertSkills from './contents/ExpertSkills'
+import ProjectGrid from './contents/ProjectGrid'
+import DeveloperConsole from './contents/DeveloperConsole'
+
+// Drive File ID to Local Asset Key mapping for instant dynamic fallbacks
+const DRIVE_ID_TO_LOCAL: Record<string, string> = {
+  '1HsKftt8VeL80RbslJJqdpypsiZrE5A1p': 'dens',      // Avatar
+  '1r40Ko-j5EQWb8FXJRtFLpOCBWILxNTKx': 'nemsu',     // Education (NEMSU)
+  '1kKs7qwc1YecOgTj25k41gc9E1QxYrX65': 'rcf',       // Project: Rando Cargo Forwarding
+  '1alsI68gSFqKL8s5tWBeRs9kR7wEx3zQN': 'sfa',       // Project: Simple SFA
+  '1MK_bE7CnN2a1yRThs2Dnd-9KQ9S_lL0p': 'tes',       // Project: Tagongon Elementary School
+}
+
+// Utility helper to safely transform Google Drive asset view links into fast streams
+const parseAssetUrl = (url: string | null | undefined): string => {
+  if (!url) return ''
+  const gDriveSig = 'drive.google.com/file/d/'
+  if (url.includes(gDriveSig)) {
+    try {
+      const parts = url.split(gDriveSig)
+      if (parts.length > 1) {
+        const fileId = parts[1].split('/')[0]
+        
+        // Dynamic check: If mapped to local assets, serve locally!
+        if (DRIVE_ID_TO_LOCAL[fileId] && LOCAL_ASSETS[DRIVE_ID_TO_LOCAL[fileId]]) {
+          return LOCAL_ASSETS[DRIVE_ID_TO_LOCAL[fileId]]
+        }
+        
+        return `https://lh3.googleusercontent.com/d/${fileId}`
+      }
+    } catch (e) {
+      console.error('Failed to parse Google Drive signature: ', e)
+    }
+  }
+  return url
+}
+
+// Master asset resolver to bridge offline static imports with online dynamic CMS keys
+const getAssetUrl = (url: string | null | undefined): string => {
+  if (!url) return ''
+  if (LOCAL_ASSETS[url]) {
+    return LOCAL_ASSETS[url]
+  }
+  return parseAssetUrl(url)
+}
 
 interface ContentsProps {
-    workRef: React.RefObject<HTMLDivElement>
-    projectsRef: React.RefObject<HTMLDivElement>
-    contactRef: React.RefObject<HTMLDivElement>
+  workRef: React.RefObject<HTMLDivElement | null>;
+  projectsRef: React.RefObject<HTMLDivElement | null>;
+  contactRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function Contents({ workRef, projectsRef, contactRef }: ContentsProps) {
+  const { data, loading } = usePortfolioData()
+  const [copied, setCopied] = useState(false)
+  const [message, setMessage] = useState('')
+  const [sending, setSending] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [mouseCoords, setMouseCoords] = useState({ x: 0, y: 0 })
 
-    const [message, setMessage] = React.useState("")
-    const [loading, setLoading] = React.useState<boolean>(false)
-    const handleSend = () => {
-        if (!message.trim()) {
-            toaster.create({ title: 'Wait!', description: `Message cannot be empty`, type: 'warning', duration: 3000 })
-            return
-        }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    setMouseCoords({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    })
+  }
 
-        setLoading(true)
-        emailjs.send("service_46nvv7k", "template_q38227z", { message }, "v31leT7Ye3YdBmfXp").then(() => {
-            toaster.create({ title: 'Message Sent!', description: `Message sent successfully.`, type: 'success', duration: 3000 })
-            setMessage("")
-            setLoading(false)
-        }).catch((err) => {
-            console.error(err)
-            toaster.create({ title: 'Failed', description: `${err.message}`, type: 'error', duration: 3000 })
-            setLoading(false)
-        })
+  // Curated theme bindings
+  const bgMain = useColorModeValue("#F9FAFB", "#0A0A0C")
+  const cardBg = useColorModeValue("white", "rgba(255, 255, 255, 0.02)")
+  const cardBorder = useColorModeValue("gray.200", "rgba(255, 255, 255, 0.04)")
+  const borderLine = useColorModeValue("gray.100", "rgba(255, 255, 255, 0.05)")
+  const textMuted = useColorModeValue("gray.500", "gray.400")
+
+  const handleCopyATSResume = () => {
+    if (!data.profile) return
+    try {
+      const experienceMarkdown = data.experience.map(exp => 
+        `### ${exp.role} @ ${exp.company_name}\n${exp.start_date} - ${exp.end_date}\n${exp.points.map(pt => `- ${pt}`).join('\n')}`
+      ).join('\n\n')
+
+      const projectsMarkdown = data.projects.map(proj => 
+        `### ${proj.name}\n${proj.description}\nLink: ${proj.url}`
+      ).join('\n\n')
+
+      const skillsMarkdown = data.skills.map(sk => `- ${sk.name} (${sk.category})`).join('\n')
+      
+      const educationMarkdown = data.education ? data.education.map(edu => 
+        `- ${edu.school_name}: ${edu.degree} (${edu.grad_year})`
+      ).join('\n') : ''
+
+      const atsMarkdown = `
+# ${data.profile.name.toUpperCase()}
+${data.profile.title} | ${data.profile.location}
+Davao City, Philippines | ${data.profile.linkedin_url} | ${data.profile.github_url}
+
+## PROFESSIONAL SUMMARY
+${data.profile.bio}
+
+## WORK EXPERIENCE
+${experienceMarkdown}
+
+## CAREER PROJECTS
+${projectsMarkdown}
+
+## CORE SKILLS & TOOLS
+${skillsMarkdown}
+
+## EDUCATION
+${educationMarkdown}
+`
+      navigator.clipboard.writeText(atsMarkdown)
+      setCopied(true)
+      toaster.create({ 
+        title: 'Resume Copied!', 
+        description: `Recruiter-friendly plain text resume copied to clipboard.`, 
+        type: 'success', 
+        duration: 3500 
+      })
+      setTimeout(() => setCopied(false), 2000)
+    } catch (e) {
+      console.error(e)
+      toaster.create({ title: 'Error', description: 'Failed to copy text. Please try again.', type: 'error' })
+    }
+  }
+
+  const handleDownloadPDF = () => {
+    window.print()
+  }
+
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!message.trim()) {
+      toaster.create({ title: 'Validation Warning', description: 'Message content cannot be blank.', type: 'warning' })
+      return
+    }
+    setSending(true)
+
+    const templateParams = {
+      from_name: 'Portfolio Visitor',
+      to_name: data.profile?.name || 'Dens Maltos',
+      message: message,
+      reply_to: 'dens.maltos@gmail.com'
     }
 
-    return (
-        <Box w='100%' h='100%' p={{ base: '4.4rem 1rem 1rem 1rem', sm: '7rem 0' }} display='flex' flexDir='column' alignItems='center' overflow='auto' scrollbar='hidden'>
-
-            <Box w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }} bg='rgba(255, 255, 255, 1)' p='2rem' borderRadius='xl' boxShadow='md'>
-                <Box display='flex' flexDir='column' alignItems='center' justifyContent='center'>
-                    <Avatar.Root w='9rem' h='9rem' border=".7rem solid rgba(38, 60, 111, 0.02)" boxShadow='xl'>
-                        <Avatar.Fallback name="Dens Maltos" />
-                        <Avatar.Image src={Dens} alt="Dens Maltos" />
-                    </Avatar.Root>
-
-                    <Box mt='1rem'>
-                        <Heading fontSize='1.3rem' fontWeight='bold' textAlign='center'>Dens Maltos</Heading>
-                        <Heading fontSize='.9rem' fontWeight='semibold' textAlign='center'>Web Developer</Heading>
-                    </Box>
-
-                    <Separator w='100%' mt='1.5rem' />
-
-                    <Box mt='1.5rem' p='0 1rem'>
-                        <Text fontSize='1rem' textAlign='center'>
-                            Hi, I’m Dens! I love creating clean, functional web applications that make things easier and more enjoyable for people to use.
-                            I’m passionate about turning ideas into something that actually works and feels good to interact with.
-                        </Text>
-                    </Box>
-
-                    <Separator w='100%' mt='1.5rem' />
-
-                    <Box mt='1.5rem' p='0 1rem'>
-                        <HStack gap='2'>
-                            <a href="https://www.facebook.com/denden.caibiganmaltos/" target="_blank" rel="noopener noreferrer">
-                                <Text color='#1877F2' fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.3rem'>
-                                    <BiLogoFacebookCircle /> Facebook
-                                </Text>
-                            </a>
-                            <Separator orientation='vertical' h='5' />
-                            <a href="www.linkedin.com/in/dens-maltos" target="_blank" rel="noopener noreferrer">
-                                <Text color='#004182' fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.3rem'>
-                                    <BiLogoLinkedinSquare /> Linkedin</Text>
-                            </a>
-                            <Separator orientation='vertical' h='5' />
-                            <a href="https://github.com/dens-cm" target="_blank" rel="noopener noreferrer">
-                                <Text color='#333' fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.3rem'>
-                                    <BiLogoGithub /> Github
-                                </Text>
-                            </a>
-                        </HStack>
-                    </Box>
-
-                    <Separator w='100%' mt='1.5rem' />
-
-                    <Box mt='1.5rem' p='0 1rem'>
-                        <Text fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.3rem'><BiSolidMap /> Davao City, Philippines</Text>
-                    </Box>
-                </Box>
-            </Box>
-
-            <Box w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }} mt='3rem' gap='1rem' display='flex' flexDir='column' alignItems='start'>
-                <Heading bg='white' p='.1rem 1rem' fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.5rem' borderRadius='full' boxShadow='lg'><BiSolidFolderOpen /> More about me</Heading>
-
-                <Box bg='white' w='100%' p='2rem' borderRadius='xl' boxShadow='md'>
-                    <Stack gap='1.5rem'>
-
-                        {/* Education Section */}
-                        <Box>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidGraduation /> Education</Heading>
-                            <Separator />
-                            <Text mt='.5rem' fontSize='.7rem' fontWeight='semibold' fontStyle='italic'>Obtained a Bachelor’s Degree at:</Text>
-                            <Box display='flex' alignItems='center' justifyContent='space-between'>
-                                <Box>
-                                    <Text fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ color: 'blue.700' }}>
-                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer">
-                                            North Eastern Mindanao State Universiy
-                                        </a>
-                                    </Text>
-                                    <Text fontSize='.8rem' fontWeight='' textTransform='capitalize'>B.S. Computer Science | Graduated at year 2024</Text>
-                                </Box>
-                                <Box>
-                                    <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer">
-                                        <Image p='.2rem' w='4rem' src={Nemsu} alt="Nemsu" borderRadius='xl' _hover={{ boxShadow: 'lg' }} transition='.3s' />
-                                    </a>
-                                </Box>
-                            </Box>
-                        </Box>
-
-                        {/* Career Experience Section */}
-                        <Box ref={workRef} style={{ scrollMarginTop: '4rem' }}>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidBarChartAlt2 /> Work Experience</Heading>
-                            <Separator />
-                            <List.Root p='0 1.5rem' gap='2rem'>
-                                <List.Item>
-                                    <Stack mt='.5rem' gap='0rem'>
-                                        <Box display='flex' flexDir={{ base: 'column', lg: 'row' }} alignItems={{ base: 'left', lg: 'center' }} justifyContent={{ lg: 'space-between' }}>
-                                            <Text fontSize='.9rem' fontWeight='semibold'>Programmer Analyst</Text>
-                                            <Text fontSize='.8rem' fontWeight='normal' fontStyle='italic'>May 2025 - January 2026</Text>
-                                        </Box>
-                                        <a href="https://simplesoftechsolutionsco.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-
-                                            <Text fontSize='.8rem' fontWeight='normal'>Simple Softech Solutions Co.</Text>
-                                        </a>
-                                    </Stack>
-                                    <List.Root mt='1rem' p='0 1.5rem' fontSize='.9rem'>
-                                        <List.Item>Gathered and analyzed client requirements to translate business needs into functional web application features.</List.Item>
-                                        <List.Item>Designed and developed tailored solutions using modern web technologies, focusing on usability and maintainability.</List.Item>
-                                        <List.Item>Collaborated with clients and internal team members to ensure applications met functional and quality standards.</List.Item>
-                                        <List.Item>Implemented and maintained application features while continuously improving development workflows and tools.</List.Item>
-                                    </List.Root>
-                                </List.Item>
-                                <List.Item>
-                                    <Stack mt='.5rem' gap='0rem'>
-                                        <Box display='flex' flexDir={{ base: 'column', lg: 'row' }} alignItems={{ base: 'left', lg: 'center' }} justifyContent={{ lg: 'space-between' }}>
-                                            <Text fontSize='.9rem' fontWeight='semibold'>
-                                                <Highlight query={'(Research Project)'} styles={{ fontWeight: 'normal' }}>
-                                                    Web Developer (Research Project)
-                                                </Highlight>
-                                            </Text>
-                                            <Text fontSize='.8rem' fontWeight='normal' fontStyle='italic'>August 2024 - April 2025</Text>
-                                        </Box>
-                                        <a href="https://nemsu-tagbina.edu.ph/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-                                            <Text fontSize='.8rem' fontWeight='normal'>North Eastern Mindanao State University</Text>
-                                        </a>
-                                    </Stack>
-                                    <List.Root mt='1rem' p='0 1.5rem' fontSize='.9rem'>
-                                        <List.Item>Built and maintained a research-driven web application to support data collection and analysis for an academic study.</List.Item>
-                                        <List.Item>Worked closely with research team members to convert study requirements into functional system features.</List.Item>
-                                        <List.Item>Ensured application compliance with research protocols, contributing to the successful completion of the research paper.</List.Item>
-                                        <List.Item>Supported iterative improvements based on research findings and user feedback.</List.Item>
-                                    </List.Root>
-                                </List.Item>
-                            </List.Root>
-                        </Box>
-
-                        {/* Professional Projects Section */}
-                        <Box ref={projectsRef} style={{ scrollMarginTop: '4rem' }} mt='1rem'>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidFolderOpen /> Career Projects</Heading>
-                            <Separator />
-                            <Heading mt='.5rem' fontSize='.9rem'>Here are several projects that have helped me grow and develop my skills:</Heading>
-
-                            <List.Root p='0 1.5rem' gap={{ base: '1rem', md: '1.5rem' }} >
-                                <List.Item>
-                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
-                                        <a href="https://rando-cargo-forwarding.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Rando Cargo Forwarding <BiLinkExternal /></a>
-                                    </Text>
-                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
-                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
-                                            A logistics management platform for Rando Cargo Forwarding, enabling streamlined booking, billing, and
-                                            delivery tracking workflows.
-                                        </Text>
-                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
-                                        <Box w='100%' h={{ base: '5rem' }} >
-                                            <a href="https://rando-cargo-forwarding.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-                                                <Image h='100%' p='.5rem' src={RcfLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
-                                            </a>
-                                        </Box>
-                                    </Box>
-                                </List.Item>
-                                <Separator display={{ base: 'flex', md: 'none' }} w='100%' />
-                                <List.Item>
-                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
-                                        <a href="https://tes-profiling.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Tagongon Elementary Profiling System <BiLinkExternal /></a>
-                                    </Text>
-                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
-                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
-                                            A web-based application designed to manage and secure teacher records and personal information, ensuring
-                                            efficient data handling and safe storage.
-                                        </Text>
-                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
-                                        <Box w='100%' h={{ base: '5rem' }}>
-                                            <a href="https://tes-profiling.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-                                                <Image h='100%' p='.5rem' src={TesLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
-                                            </a>
-                                        </Box>
-                                    </Box>
-                                </List.Item>
-                                <Separator display={{ base: 'flex', md: 'none' }} w='100%' />
-                                <List.Item>
-                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
-                                        <a href="https://sfapldt.simplesoftech.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Simple SFA <BiLinkExternal /></a>
-                                    </Text>
-                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
-                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
-                                            A management application designed for a specific company to streamline business operations,
-                                            monitor activities, and support sales-related processes.
-                                        </Text>
-                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
-                                        <Box w='100%' h={{ base: '5rem' }}>
-                                            <a href="https://sfapldt.simplesoftech.com/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-                                                <Image h='100%' p='.5rem' src={SfaLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
-                                            </a>
-                                        </Box>
-                                    </Box>
-                                </List.Item>
-                                <Separator display={{ base: 'flex', md: 'none' }} w='100%' />
-                                <List.Item>
-                                    <Text mt='.5rem' color='blue.700' fontSize='.8rem' fontWeight='semibold' textTransform='uppercase' _hover={{ textDecoration: 'underline' }}>
-                                        <a href="https://tasetem.co/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>Tasetemco <BiLinkExternal /></a>
-                                    </Text>
-                                    <Box display='flex' flexDir={{ base: 'column', md: 'row' }} alignItems='center' gap='2.5rem'>
-                                        <Text w='100%' mt='.5rem' fontSize='.9rem'>
-                                            A loan application system built with the MERN stack, designed to simplify loan requests and tracking.
-                                            It provides a user-friendly interface, secure authentication, and an efficient process for managing applications and approvals.
-                                        </Text>
-                                        <Separator display={{ base: 'none', md: 'flex' }} orientation='vertical' h='10' />
-                                        <Box w='100%' h={{ base: '5rem' }}>
-                                            <a href="https://tasetem.co/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
-                                                <Image h='100%' p='.5rem' src={TasetemcoLogo} borderRadius='xl' _hover={{ boxShadow: 'xl' }} transition='.3s' />
-                                            </a>
-                                        </Box>
-                                    </Box>
-                                </List.Item>
-                            </List.Root>
-                        </Box>
-
-                        {/* Tools and Technologies */}
-                        <Box mt='1rem'>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiCodeAlt /> Tools and Technologies</Heading>
-                            <Separator mt='2' />
-                            <Heading mt='.5rem' fontSize='.9rem' fontWeight='normal' fontStyle='italic'>Common Tools and Technologies I usually use:</Heading>
-                            <Box mt='1rem' display='flex' flexWrap='wrap' gap='1rem'>
-                                <a href="https://nodejs.org/en" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} >
-                                    <Text color='#215732' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoNodejs /> Node</Text>
-                                </a>
-                                <Separator orientation='vertical' h='5' />
-                                <a href="https://dotnet.microsoft.com/en-us/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <Text color='#605ca9' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><SiDotnet /> .Net</Text>
-                                </a>
-                                <Separator orientation='vertical' h='5' />
-                                <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <Text color='#F1502F' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGit /> Git</Text>
-                                </a>
-                                <Separator orientation='vertical' h='5' />
-                                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <Text color='#333' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoGithub /> GitHub</Text>
-                                </a>
-                                <Separator orientation='vertical' h='5' />
-                                <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                    <Text color='#589636' fontSize='.8rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiLogoMongodb /> MongoDB</Text>
-                                </a>
-                            </Box>
-                        </Box>
-                    </Stack>
-                </Box>
-            </Box>
-
-            <Box ref={contactRef} w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }} mt='3rem' gap='1rem' display='flex' flexDir='column' alignItems='start'>
-                <Heading bg='white' p='.1rem 1rem' fontSize='.7rem' fontWeight='bold' textTransform='uppercase' display='flex' alignItems='center' gap='.5rem' borderRadius='full' boxShadow='lg'><BiSolidEnvelope /> Contact</Heading>
-
-                <Box bg='white' w='100%' p='2rem' borderRadius='xl' boxShadow='md'>
-                    <Stack gap='1.5rem'>
-
-                        <Box>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSupport /> Let's Connect!</Heading>
-                            <Separator />
-                            <Text mt='.5rem' fontSize='.8rem' fontWeight='semibold'>Do you have a project in mind?</Text>
-                            <Text mt='.5rem' fontSize='.8rem'>Hit the send button to get in touch—let’s build something creative together!</Text>
-                            <Text fontSize='.8rem' fontStyle='italic'>
-                                <Highlight query={'dens.maltos@gmail.com'} styles={{ fontWeight: 'semibold' }}>
-                                    You can reach me anytime at: dens.maltos@gmail.com
-                                </Highlight>
-                            </Text>
-                        </Box>
-
-                        <HStack>
-                            <Separator flex="1" />
-                            <Text fontSize='.8rem' fontStyle='italic' flexShrink="0">or</Text>
-                            <Separator flex="1" />
-                        </HStack>
-
-                        <Box>
-                            <Heading fontSize='.9rem' fontWeight='bold' display='flex' alignItems='center' gap='.5rem'><BiSolidMessageSquareDots /> Contact me Now!</Heading>
-                            <Box mt='1rem'>
-                                <Textarea required value={message} onChange={(e) => setMessage(e.target.value)} fontSize='.8rem' fontWeight='semibold' borderRadius='lg' placeholder="Your message here." />
-                                <Box w='100%' display='flex' justifyContent='right'>
-                                    <Button onClick={handleSend} loading={loading} loadingText='Sending' size='xs' colorPalette='blue' borderRadius='lg'><BiSolidEnvelope />Send</Button>
-                                </Box>
-                            </Box>
-                        </Box>
-
-                    </Stack>
-                </Box>
-            </Box>
-
-            <Box w={{ base: '100%', sm: '80%', md: '60%', lg: '50%' }} mt='3rem' gap='1rem' display='flex' flexDir='column' alignItems='start'>
-                <Footer />
-            </Box>
-        </Box >
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID || '', 
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '', 
+      templateParams, 
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY || ''
     )
+    .then(() => {
+      setSending(false)
+      setMessage('')
+      toaster.create({ title: 'Message Dispatched!', description: 'Your email has been successfully sent to Dens.', type: 'success' })
+    })
+    .catch((err) => {
+      setSending(false)
+      console.error(err)
+      toaster.create({ title: 'Dispatch Failure', description: 'An unexpected error occurred. Please try again later.', type: 'error' })
+    })
+  }
+
+  // Memoize grouped skills classification
+  const groupedSkills = React.useMemo(() => {
+    if (!data.skills) return { frontend: [], backend: [], tools: [] }
+    return {
+      frontend: data.skills.filter(s => s.category === 'frontend'),
+      backend: data.skills.filter(s => s.category === 'backend'),
+      tools: data.skills.filter(s => s.category === 'tools')
+    }
+  }, [data.skills])
+
+  const avatarImgSrc = getAssetUrl(data.profile?.avatar_url)
+
+  const commandOptions = [
+    { label: "📄 Download PDF Resume", action: handleDownloadPDF },
+    { label: "📋 Copy ATS-Friendly Resume", action: handleCopyATSResume },
+    { label: "💼 Jump to Work History", action: () => workRef.current?.scrollIntoView({ behavior: 'smooth' }) },
+    { label: "🚀 Jump to Projects", action: () => projectsRef.current?.scrollIntoView({ behavior: 'smooth' }) },
+    { label: "📬 Jump to Contact Console", action: () => contactRef.current?.scrollIntoView({ behavior: 'smooth' }) },
+  ]
+
+  return (
+    <Box 
+      className="portfolio-wrapper"
+      w="100%" 
+      h="calc(100vh - 3.6rem)" 
+      mt="3.6rem" 
+      overflowY="auto" 
+      scrollbar="hidden"
+      display="flex"
+      justifyContent="center"
+      bg={bgMain}
+      position="relative"
+      onMouseMove={handleMouseMove}
+      style={{
+        '--mouse-x': `${mouseCoords.x}px`,
+        '--mouse-y': `${mouseCoords.y}px`
+      } as React.CSSProperties}
+    >
+      {/* Dynamic Font and Print Styles Engine */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@300;400;700;800&family=Inter:wght@300;400;600;700;900&display=swap');
+
+        /* Keyframes for soft background glows */
+        @keyframes floatGlow {
+          0% { transform: translate(0px, 0px) scale(1); }
+          50% { transform: translate(25px, -30px) scale(1.1); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        .ambient-glow-1 {
+          position: absolute;
+          width: 450px;
+          height: 450px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, rgba(79, 70, 229, 0) 70%);
+          filter: blur(50px);
+          animation: floatGlow 15s infinite ease-in-out;
+          top: -100px;
+          left: -150px;
+          z-index: 1;
+        }
+
+        .ambient-glow-2 {
+          position: absolute;
+          width: 500px;
+          height: 500px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, rgba(37, 99, 235, 0) 70%);
+          filter: blur(60px);
+          animation: floatGlow 20s infinite ease-in-out alternate;
+          bottom: 100px;
+          right: -100px;
+          z-index: 1;
+        }
+
+        .grid-blueprint-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 1;
+          background-size: 50px 50px;
+          background-image: 
+            linear-gradient(to right, rgba(99, 102, 241, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(99, 102, 241, 0.035) 1px, transparent 1px);
+          mask-image: radial-gradient(circle at 50% 50%, white, transparent 95%);
+          -webkit-mask-image: radial-gradient(circle at 50% 50%, white, transparent 95%);
+        }
+
+        .interactive-glow-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 1;
+          background: radial-gradient(
+            600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+            rgba(99, 102, 241, 0.06),
+            transparent 40%
+          );
+        }
+
+        /* Dynamic Pure CSS Fluid Mesh Backdrop */
+        @keyframes fluidOrbit1 {
+          0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+          50% { transform: translate(80px, -120px) scale(1.15) rotate(180deg); }
+          100% { transform: translate(0px, 0px) scale(1) rotate(360deg); }
+        }
+
+        @keyframes fluidOrbit2 {
+          0% { transform: translate(0px, 0px) scale(1.1) rotate(0deg); }
+          50% { transform: translate(-100px, 90px) scale(0.9) rotate(-180deg); }
+          100% { transform: translate(0px, 0px) scale(1.1) rotate(360deg); }
+        }
+
+        @keyframes fluidOrbit3 {
+          0% { transform: translate(0px, 0px) scale(0.9) rotate(0deg); }
+          50% { transform: translate(100px, 60px) scale(1.05) rotate(90deg); }
+          100% { transform: translate(0px, 0px) scale(0.9) rotate(360deg); }
+        }
+
+        .fluid-mesh-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(120px);
+          z-index: 1;
+          opacity: 0.12;
+          pointer-events: none;
+          mix-blend-mode: screen;
+          will-change: transform;
+        }
+
+        /* Automatic light-mode paste theme adjustment */
+        .chakra-theme-light .fluid-mesh-orb,
+        [data-theme="light"] .fluid-mesh-orb {
+          opacity: 0.05;
+          mix-blend-mode: multiply;
+        }
+
+        .orb-cyan {
+          width: 550px;
+          height: 550px;
+          background: radial-gradient(circle, rgba(6, 182, 212, 0.5) 0%, rgba(6, 182, 212, 0) 70%);
+          top: 8%;
+          left: -150px;
+          animation: fluidOrbit1 32s infinite ease-in-out alternate;
+        }
+
+        .orb-purple {
+          width: 650px;
+          height: 650px;
+          background: radial-gradient(circle, rgba(139, 92, 246, 0.45) 0%, rgba(139, 92, 246, 0) 70%);
+          bottom: 12%;
+          right: -200px;
+          animation: fluidOrbit2 38s infinite ease-in-out alternate;
+        }
+
+        .orb-indigo {
+          width: 480px;
+          height: 480px;
+          background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(99, 102, 241, 0) 70%);
+          top: 40%;
+          left: 25%;
+          animation: fluidOrbit3 28s infinite ease-in-out alternate;
+        }
+
+        /* Pulse state for active banner indicator */
+        .pulse-dot {
+          box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+          animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+          0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+          }
+          70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+          }
+          100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+          }
+        }
+
+        @media print {
+          /* Reset root layout for dynamic multi-page flow */
+          html, body, #root {
+            background: white !important;
+            color: #111827 !important;
+            height: auto !important;
+            overflow: visible !important;
+            font-size: 10pt !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide non-printable web modules */
+          .no-print,
+          .theme-toggle-button,
+          button,
+          .chakra-button,
+          form,
+          header,
+          footer {
+            display: none !important;
+          }
+
+          /* Force wrapper to stretch to full length */
+          .portfolio-wrapper {
+            height: auto !important;
+            overflow: visible !important;
+            margin-top: 0 !important;
+            padding: 0 !important;
+            background: white !important;
+          }
+
+          .portfolio-inner {
+            flex-direction: column !important;
+            gap: 1rem !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+
+          /* Convert Sticky Sidecard into executive Resume Header */
+          .profile-sidecard {
+            width: 100% !important;
+            max-width: 100% !important;
+            position: relative !important;
+            top: 0 !important;
+            border: none !important;
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: 2px solid #E5E7EB !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            box-shadow: 0 0 0 0 transparent !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            padding: 0 0 1rem 0 !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+          }
+
+          .profile-header-container {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 1.2rem !important;
+            width: auto !important;
+          }
+
+          .avatar-halo,
+          .avatar-halo span,
+          .avatar-halo div,
+          .avatar-halo img {
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+            max-width: 3.5rem !important;
+            max-height: 3.5rem !important;
+            min-width: 3.5rem !important;
+            min-height: 3.5rem !important;
+            border: none !important;
+            border-radius: 9999px !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            background-image: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+
+          .name-info {
+            text-align: left !important;
+            margin-top: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+          }
+
+          .profile-name {
+            font-size: 1.4rem !important;
+            font-weight: 800 !important;
+            color: #1E3A8A !important;
+            margin: 0 !important;
+            line-height: 1.2 !important;
+          }
+
+          .profile-title-badge {
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            color: #2563EB !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            margin-top: 0.15rem !important;
+            text-transform: uppercase !important;
+          }
+
+          .bio-container {
+            display: none !important; /* Hide long side summaries */
+          }
+
+          .social-badges {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+            gap: 0.8rem !important;
+            margin-top: 0 !important;
+          }
+
+          .social-badges a, 
+          .social-badges span {
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            color: #4B5563 !important;
+            text-decoration: none !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.2rem !important;
+          }
+
+          /* Force main contents area full-width */
+          .main-contents {
+            width: 100% !important;
+            max-width: 100% !important;
+            gap: 1.2rem !important;
+          }
+
+          /* Resume Sections styling */
+          section, .main-contents section {
+            border: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            margin-bottom: 1rem !important;
+            page-break-inside: avoid !important;
+          }
+
+          section h2, .main-contents section h2 {
+            font-size: 1.05rem !important;
+            font-weight: 800 !important;
+            color: #1E3A8A !important;
+            border-bottom: 1.5px solid #D1D5DB !important;
+            padding-bottom: 0.25rem !important;
+            margin-bottom: 0.6rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+          }
+
+          /* Experience & Project timeline adaptations */
+          .experience-timeline {
+            border-left: none !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+          }
+
+          .experience-node {
+            display: none !important;
+          }
+
+          .project-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.8rem !important;
+          }
+
+          .project-card {
+            border: 1px solid #E5E7EB !important;
+            padding: 0.8rem !important;
+            border-radius: 0.4rem !important;
+            page-break-inside: avoid !important;
+            box-shadow: none !important;
+          }
+        }
+      ` }} />
+
+      {/* SVG Ambient Glows & Blueprint Interactive Grid */}
+      <Box className="ambient-glow-1 no-print" />
+      <Box className="ambient-glow-2 no-print" />
+      <Box className="grid-blueprint-overlay no-print" />
+      <Box className="interactive-glow-bg no-print" />
+
+      {/* Dynamic Pure CSS Vector Fluid Mesh Backdrop */}
+      <Box className="fluid-mesh-orb orb-cyan no-print" />
+      <Box className="fluid-mesh-orb orb-purple no-print" />
+      <Box className="fluid-mesh-orb orb-indigo no-print" />
+
+      <Box 
+        className="portfolio-inner"
+        w={{ base: "92%", sm: "85%", lg: "85%", xl: "72%" }} 
+        py={{ base: "2rem", lg: "4rem" }} 
+        zIndex="2"
+        display="flex"
+        flexDir="column"
+        gap="3.5rem"
+      >
+        
+        {/* ========================================================
+            1. PREMIUM HERO BRAND MODULE (Above the fold)
+            ======================================================== */}
+        <HeroBrand
+          loading={loading}
+          data={data}
+          menuOpen={menuOpen}
+          setMenuOpen={setMenuOpen}
+          commandOptions={commandOptions}
+          cardBorder={cardBorder}
+          textMuted={textMuted}
+        />
+
+        {/* ========================================================
+            2. THE DYNAMIC BENTO GRID ENGINE
+            ======================================================== */}
+        <Grid 
+          templateColumns="repeat(12, 1fr)" 
+          gap="2rem"
+          w="100%"
+        >
+          
+          {/* BENTO CARD 1: ACTIVE EXPERIENCE MODULE (Span 7) */}
+          <GridItem colSpan={{ base: 12, lg: 7 }} display="flex" flexDir="column">
+            <WorkHistory
+              loading={loading}
+              data={data}
+              workRef={workRef}
+              cardBg={cardBg}
+              cardBorder={cardBorder}
+              borderLine={borderLine}
+              textMuted={textMuted}
+            />
+          </GridItem>
+
+          {/* BENTO CARD 2 & 3 Column: PROFILE SIDECARD & EDUCATION (Span 5) */}
+          <GridItem colSpan={{ base: 12, lg: 5 }} display="flex" flexDir="column" gap="2rem">
+            <ProfileSidecard
+              loading={loading}
+              data={data}
+              copied={copied}
+              handleCopyATSResume={handleCopyATSResume}
+              handleDownloadPDF={handleDownloadPDF}
+              avatarImgSrc={avatarImgSrc}
+              cardBg={cardBg}
+              cardBorder={cardBorder}
+              borderLine={borderLine}
+              textMuted={textMuted}
+            />
+
+            <EducationCard
+              loading={loading}
+              data={data}
+              cardBg={cardBg}
+              cardBorder={cardBorder}
+              borderLine={borderLine}
+              textMuted={textMuted}
+              getAssetUrl={getAssetUrl}
+            />
+          </GridItem>
+
+          {/* BENTO CARD 4: CATEGORIZED SKILLS NODES (Span 5) */}
+          <GridItem colSpan={{ base: 12, lg: 5 }} display="flex" flexDir="column">
+            <ExpertSkills
+              loading={loading}
+              groupedSkills={groupedSkills}
+              cardBg={cardBg}
+              cardBorder={cardBorder}
+              borderLine={borderLine}
+            />
+          </GridItem>
+
+          {/* BENTO CARD 5: CAREER PROJECTS COMPONENT (Span 7) */}
+          <GridItem colSpan={{ base: 12, lg: 7 }} display="flex" flexDir="column">
+            <ProjectGrid
+              loading={loading}
+              data={data}
+              projectsRef={projectsRef}
+              cardBg={cardBg}
+              cardBorder={cardBorder}
+              borderLine={borderLine}
+              textMuted={textMuted}
+              getAssetUrl={getAssetUrl}
+            />
+          </GridItem>
+
+          {/* BENTO CARD 6: ACTIVE DIRECT MESSAGE COMMAND CONSOLE (Span 12) */}
+          <DeveloperConsole
+            loading={loading}
+            contactRef={contactRef}
+            message={message}
+            setMessage={setMessage}
+            sending={sending}
+            handleSend={handleSend}
+            cardBg={cardBg}
+            cardBorder={cardBorder}
+            borderLine={borderLine}
+            textMuted={textMuted}
+          />
+
+        </Grid>
+
+        {/* Footer block */}
+        <Box w="100%" m=".5rem 0" p='0 0 1rem 0'>
+          <Footer />
+        </Box>
+
+      </Box>
+    </Box>
+  )
 }

@@ -1,0 +1,111 @@
+{
+  "basics": {
+    "name": "Dens Maltos",
+    "label": "Web Developer",
+    "image": "/src/assets/dens.jpeg",
+    "email": "dens.maltos@gmail.com",
+    "url": "https://dens-cm.onrender.com/",
+    "summary": "Hi, I’m Dens! I love creating clean, functional web applications that make things easier and more enjoyable for people to use. I’m passionate about turning ideas into something that actually works and feels good to interact with.",
+    "location": {
+      "city": "Davao City",
+      "countryCode": "PH",
+      "region": "Davao Region"
+    },
+    "profiles": [
+      {
+        "network": "Facebook",
+        "username": "denden.caibiganmaltos",
+        "url": "https://www.facebook.com/denden.caibiganmaltos/"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "dens-maltos",
+        "url": "https://www.linkedin.com/in/dens-maltos"
+      },
+      {
+        "network": "GitHub",
+        "username": "dens-cm",
+        "url": "https://github.com/dens-cm"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Simple Softech Solutions Co.",
+      "position": "Programmer Analyst",
+      "url": "https://simplesoftechsolutionsco.com/",
+      "startDate": "2025-05-01",
+      "endDate": "2026-01-31",
+      "summary": "Designed, developed, and maintained custom web tools and system integrations for clients.",
+      "highlights": [
+        "Gathered and analyzed client requirements to translate business needs into functional web application features.",
+        "Designed and developed tailored solutions using modern web technologies, focusing on usability and maintainability.",
+        "Collaborated with clients and internal team members to ensure applications met functional and quality standards.",
+        "Implemented and maintained application features while continuously improving development workflows and tools."
+      ]
+    },
+    {
+      "name": "North Eastern Mindanao State University",
+      "position": "Web Developer (Research Project)",
+      "url": "https://nemsu-tagbina.edu.ph/",
+      "startDate": "2024-08-01",
+      "endDate": "2025-04-30",
+      "summary": "Built a research-driven web application to streamline data analysis and portal metrics.",
+      "highlights": [
+        "Built and maintained a research-driven web application to support data collection and analysis for an academic study.",
+        "Worked closely with research team members to convert study requirements into functional system features.",
+        "Ensured application compliance with research protocols, contributing to the successful completion of the research paper.",
+        "Supported iterative improvements based on research findings and user feedback."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "North Eastern Mindanao State University",
+      "url": "https://nemsu-tagbina.edu.ph/",
+      "area": "Computer Science",
+      "studyType": "Bachelor of Science",
+      "startDate": "2020-08-01",
+      "endDate": "2024-06-30"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Backend Development",
+      "level": "Advanced",
+      "keywords": ["Node.js", ".NET", "MERN Stack", "Express"]
+    },
+    {
+      "name": "Databases",
+      "level": "Intermediate",
+      "keywords": ["MongoDB", "MS SQL Server", "Supabase"]
+    },
+    {
+      "name": "Tools & Workflows",
+      "level": "Advanced",
+      "keywords": ["Git", "GitHub", "Vite", "Chakra UI"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Rando Cargo Forwarding",
+      "description": "A logistics management platform for Rando Cargo Forwarding, enabling streamlined booking, billing, and delivery tracking workflows.",
+      "url": "https://randocargoforwarding.com/"
+    },
+    {
+      "name": "Tagongon Elementary Profiling System",
+      "description": "A web-based application designed to manage and secure teacher records and personal information, ensuring efficient data handling and safe storage.",
+      "url": "https://tes-profiling.onrender.com/"
+    },
+    {
+      "name": "Simple SFA",
+      "description": "A management application designed for a specific company to streamline business operations, monitor activities, and support sales-related processes.",
+      "url": "https://sfapldt.simplesoftech.com/"
+    },
+    {
+      "name": "Tasetemco",
+      "description": "A loan application system built with the MERN stack, designed to simplify loan requests and tracking. It provides a user-friendly interface, secure authentication, and an efficient process for managing applications and approvals.",
+      "url": "https://tasetem.co/"
+    }
+  ]
+}
