@@ -15,7 +15,7 @@ const customConfig = defineConfig({
       },
     },
   },
-  globalCss: {
+  globalCss: ({
     "html, body": {
       margin: 0,
       padding: 0,
@@ -63,7 +63,7 @@ const customConfig = defineConfig({
         boxShadow: "none !important",
       }
     }
-  }
+  } as never)
 })
 
 const customSystem = createSystem(defaultConfig, customConfig)
