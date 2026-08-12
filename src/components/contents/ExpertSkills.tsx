@@ -1,9 +1,10 @@
-import { 
-  Box, 
-  Heading, 
-  Stack, 
-  Text, 
-  Skeleton
+import {
+  Box,
+  Heading,
+  Stack,
+  Text,
+  Skeleton,
+  Badge
 } from "@chakra-ui/react"
 import { BiCodeAlt } from "react-icons/bi"
 
@@ -29,129 +30,73 @@ interface ExpertSkillsProps {
 export default function ExpertSkills({
   loading,
   groupedSkills,
-  cardBg,
-  cardBorder,
   borderLine
 }: ExpertSkillsProps) {
+
+  const renderCategory = (title: string, skills: SkillItem[], isLast: boolean) => {
+    if (!skills || skills.length === 0) return null;
+
+    return (
+      <Box
+        display="flex"
+        flexDir={{ base: "column", md: "row" }}
+        gap={{ base: ".5rem", md: "1rem" }}
+        borderBottom={isLast ? "none" : "1px solid"}
+        borderColor={borderLine}
+        w="100%"
+      >
+        <Box w={{ base: "100%", md: "120px" }} flexShrink={0} pt="1">
+          <Text fontSize="0.75rem" fontWeight='semibold' color="gray.500" textTransform="uppercase" fontStyle='italic' letterSpacing="wider">
+            {title}
+          </Text>
+        </Box>
+
+        <Box display="flex" flexWrap="wrap" gap="0.8rem" flex="1">
+          {skills.map((skill, idx) => (
+            <a href={skill.url} key={idx} target="_blank" rel="noopener noreferrer">
+              <Badge
+                p='.25rem .7rem'
+                variant='outline'
+                fontSize="0.75rem"
+                fontWeight='extrabold'
+                bg={`color-mix(in srgb, ${skill.color} 8%, transparent)`}
+                color={skill.color}
+                border="1px solid"
+                borderColor={`color-mix(in srgb, ${skill.color} 25%, transparent)`}
+                _hover={{
+                  transform: "translateY(-2px)",
+                  borderColor: skill.color,
+                  bg: `color-mix(in srgb, ${skill.color} 15%, transparent)`,
+                  boxShadow: `0 4px 12px color-mix(in srgb, ${skill.color} 20%, transparent)`
+                }}
+                transition="all 0.25s ease"
+              >
+                {skill.name}
+              </Badge>
+            </a>
+          ))}
+        </Box>
+      </Box>
+    )
+  }
+
   return (
-    <Skeleton loading={loading} variant="pulse" borderRadius="3xl" height="100%">
-      <Box 
+    <Skeleton loading={loading} variant="pulse">
+      <Box
         className="expert-skills-card"
-        bg={cardBg} 
-        border="1px solid"
-        borderColor={cardBorder}
-        borderRadius="3xl"
-        p="2.2rem"
-        boxShadow="md"
         transition="all 0.3s ease"
-        _hover={{ borderColor: "rgba(20, 184, 166, 0.25)" }}
         display="flex"
         flexDir="column"
         height="100%"
       >
-        <Heading fontSize="1.1rem" fontWeight="900" display="flex" alignItems="center" gap="2.5" textTransform="uppercase" fontFamily="'Outfit', sans-serif" mb="1.5rem">
-          <BiCodeAlt size="1.3rem" color="#14B8A6" /> Expert Skills
+        <Heading fontSize="1rem" fontWeight='semibold' display="flex" alignItems="center" gap="2.5" textTransform="uppercase" mb="1.5rem">
+          <BiCodeAlt color="#14B8A6" /> Tech Stack
         </Heading>
 
-        <Stack gap="5" flex="1">
-          {/* Frontend Category */}
-          {groupedSkills.frontend && groupedSkills.frontend.length > 0 && (
-            <Box>
-              <Text fontSize="0.7rem" fontWeight="900" color="blue.500" textTransform="uppercase" mb="0.6rem" fontFamily="mono">
-                Frontend Engineering
-              </Text>
-              <Box display="flex" flexWrap="wrap" gap="0.5rem">
-                {groupedSkills.frontend.map((skill, idx) => (
-                  <a href={skill.url} key={idx} target="_blank" rel="noopener noreferrer">
-                    <Box 
-                      px="2.5" 
-                      py="1" 
-                      borderRadius="lg" 
-                      border="1px solid" 
-                      borderColor={borderLine}
-                      bg="rgba(255,255,255,0.02)"
-                      fontSize="0.75rem" 
-                      fontWeight="bold" 
-                      display="flex" 
-                      alignItems="center" 
-                      gap="1.5"
-                      _hover={{ borderColor: skill.color, color: skill.color, bg: "rgba(255,255,255,0.04)" }}
-                      transition="all 0.2s ease"
-                    >
-                      <Box w="0.45rem" h="0.45rem" borderRadius="full" bg={skill.color} />
-                      {skill.name}
-                    </Box>
-                  </a>
-                ))}
-              </Box>
-            </Box>
-          )}
-
-          {/* Backend Category */}
-          {groupedSkills.backend && groupedSkills.backend.length > 0 && (
-            <Box>
-              <Text fontSize="0.7rem" fontWeight="900" color="indigo.500" textTransform="uppercase" mb="0.6rem" fontFamily="mono">
-                Backend & Databases
-              </Text>
-              <Box display="flex" flexWrap="wrap" gap="0.5rem">
-                {groupedSkills.backend.map((skill, idx) => (
-                  <a href={skill.url} key={idx} target="_blank" rel="noopener noreferrer">
-                    <Box 
-                      px="2.5" 
-                      py="1" 
-                      borderRadius="lg" 
-                      border="1px solid" 
-                      borderColor={borderLine}
-                      bg="rgba(255,255,255,0.02)"
-                      fontSize="0.75rem" 
-                      fontWeight="bold" 
-                      display="flex" 
-                      alignItems="center" 
-                      gap="1.5"
-                      _hover={{ borderColor: skill.color, color: skill.color, bg: "rgba(255,255,255,0.04)" }}
-                      transition="all 0.2s ease"
-                    >
-                      <Box w="0.45rem" h="0.45rem" borderRadius="full" bg={skill.color} />
-                      {skill.name}
-                    </Box>
-                  </a>
-                ))}
-              </Box>
-            </Box>
-          )}
-
-          {/* Tools Category */}
-          {groupedSkills.tools && groupedSkills.tools.length > 0 && (
-            <Box>
-              <Text fontSize="0.7rem" fontWeight="900" color="teal.500" textTransform="uppercase" mb="0.6rem" fontFamily="mono">
-                DevOps & Cloud Systems
-              </Text>
-              <Box display="flex" flexWrap="wrap" gap="0.5rem">
-                {groupedSkills.tools.map((skill, idx) => (
-                  <a href={skill.url} key={idx} target="_blank" rel="noopener noreferrer">
-                    <Box 
-                      px="2.5" 
-                      py="1" 
-                      borderRadius="lg" 
-                      border="1px solid" 
-                      borderColor={borderLine}
-                      bg="rgba(255,255,255,0.02)"
-                      fontSize="0.75rem" 
-                      fontWeight="bold" 
-                      display="flex" 
-                      alignItems="center" 
-                      gap="1.5"
-                      _hover={{ borderColor: skill.color, color: skill.color, bg: "rgba(255,255,255,0.04)" }}
-                      transition="all 0.2s ease"
-                    >
-                      <Box w="0.45rem" h="0.45rem" borderRadius="full" bg={skill.color} />
-                      {skill.name}
-                    </Box>
-                  </a>
-                ))}
-              </Box>
-            </Box>
-          )}
+        <Stack gap="1rem" flex="1" w="100%">
+          {renderCategory("Frontend", groupedSkills.frontend, false)}
+          {renderCategory("Backend", groupedSkills.backend, false)}
+          {renderCategory("Tools", groupedSkills.tools, true)}
         </Stack>
       </Box>
     </Skeleton>

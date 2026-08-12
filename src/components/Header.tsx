@@ -55,8 +55,8 @@ export default function Header({ scrollToWork, scrollToProjects, scrollToContact
             onClick={scrollToWork} 
             size="sm" 
             variant="ghost" 
-            fontWeight="bold" 
-            borderRadius="xl"
+            fontSize=".7rem"
+            textTransform="uppercase"
             _hover={{ bg: "gray.100", _dark: { bg: "rgba(255, 255, 255, 0.08)" } }}
           >
             <BiSolidBarChartAlt2 /> Work Experience
@@ -64,9 +64,9 @@ export default function Header({ scrollToWork, scrollToProjects, scrollToContact
           <Button 
             onClick={scrollToProjects} 
             size="sm" 
-            variant="ghost" 
-            fontWeight="bold" 
-            borderRadius="xl"
+            variant="ghost"  
+            fontSize=".7rem"
+            textTransform="uppercase"
             _hover={{ bg: "gray.100", _dark: { bg: "rgba(255, 255, 255, 0.08)" } }}
           >
             <BiSolidFolderOpen /> Career Projects
@@ -74,9 +74,9 @@ export default function Header({ scrollToWork, scrollToProjects, scrollToContact
           <Button 
             onClick={scrollToContact} 
             size="sm" 
-            variant="ghost" 
-            fontWeight="bold" 
-            borderRadius="xl"
+            variant="ghost"  
+            fontSize=".7rem"
+            textTransform="uppercase"
             _hover={{ bg: "gray.100", _dark: { bg: "rgba(255, 255, 255, 0.08)" } }}
           >
             <BiSolidEnvelope /> Contact
@@ -91,7 +91,6 @@ export default function Header({ scrollToWork, scrollToProjects, scrollToContact
             onClick={scrollToWork} 
             size="sm" 
             variant="ghost" 
-            borderRadius="lg"
             px="2.5"
             _hover={{ bg: "gray.100", _dark: { bg: "rgba(255, 255, 255, 0.08)" } }}
           >
@@ -101,7 +100,6 @@ export default function Header({ scrollToWork, scrollToProjects, scrollToContact
             onClick={scrollToProjects} 
             size="sm" 
             variant="ghost" 
-            borderRadius="lg"
             px="2.5"
             _hover={{ bg: "gray.100", _dark: { bg: "rgba(255, 255, 255, 0.08)" } }}
           >
@@ -111,14 +109,13 @@ export default function Header({ scrollToWork, scrollToProjects, scrollToContact
             onClick={scrollToContact} 
             size="sm" 
             variant="ghost" 
-            borderRadius="lg"
             px="2.5"
             _hover={{ bg: "gray.100", _dark: { bg: "rgba(255, 255, 255, 0.08)" } }}
           >
             <BiSolidEnvelope size="1.2rem" />
           </Button>
           
-          <ColorModeButton size="sm" />
+          <ColorModeButton />
         </HStack>
       </Box>
     </Box>

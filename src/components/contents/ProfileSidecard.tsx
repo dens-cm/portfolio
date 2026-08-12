@@ -4,10 +4,11 @@ import {
   Button,
   Heading,
   HStack,
-  Separator,
-  Stack,
+  Text,
   Badge,
-  Skeleton
+  Skeleton,
+  Select,
+  createListCollection
 } from "@chakra-ui/react"
 import {
   BiLogoFacebookCircle,
@@ -15,8 +16,7 @@ import {
   BiLogoLinkedinSquare,
   BiSolidMap,
   BiCopy,
-  BiCheck,
-  BiSolidFilePdf
+  BiCheck
 } from "react-icons/bi"
 import { useColorModeValue } from '@/components/ui/color-mode'
 import type { PortfolioData } from '@/hooks/usePortfolioData'
@@ -32,6 +32,7 @@ interface ProfileSidecardProps {
   cardBorder: string
   borderLine: string
   textMuted: string
+  commandOptions: { label: string; action: () => void }[]
 }
 
 export default function ProfileSidecard({
@@ -39,143 +40,168 @@ export default function ProfileSidecard({
   data,
   copied,
   handleCopyATSResume,
-  handleDownloadPDF,
   avatarImgSrc,
-  cardBg,
   cardBorder,
   borderLine,
-  textMuted
+  textMuted,
+  commandOptions
 }: ProfileSidecardProps) {
+  const searchBg = useColorModeValue("white", "rgba(255,255,255,0.02)")
+  const actionCollection = createListCollection({
+    items: commandOptions.map((opt, idx) => ({ label: opt.label, value: String(idx) }))
+  })
+
   return (
-    <Skeleton loading={loading} variant="pulse" borderRadius="3xl">
+    <Skeleton loading={loading} variant="pulse">
       <Box
         className="profile-sidecard"
-        bg={cardBg}
-        border="1px solid"
-        borderColor={cardBorder}
-        borderRadius="3xl"
-        p="2.2rem"
-        boxShadow="md"
-        transition="all 0.3s ease"
-        _hover={{ borderColor: "rgba(99, 102, 241, 0.25)" }}
         display="flex"
-        flexDir="column"
-        alignItems="center"
+        flexDir={{ base: "column", md: "row" }}
+        alignItems={{ base: "center", md: "flex-start" }}
+        gap={{ base: "2rem", md: "4rem" }}
+        textAlign={{ base: "center", md: "left" }}
+        w="100%"
+        maxW="100%"
+        pb="2rem"
+        borderBottom="1px solid"
+        borderColor={borderLine}
       >
-        <Box className="profile-header-container" display="flex" flexDir="column" alignItems="center" justifyContent="center" w="100%">
-          {/* Pulsing Avatar halo */}
-          <Box
-            className="avatar-halo"
-            borderRadius="full"
-            p="1"
-            bgGradient="to-br"
-            gradientFrom="blue.500"
-            gradientTo="indigo.600"
-            boxShadow="xl"
-            transition="transform 0.3s ease"
-            _hover={{ transform: "scale(1.05)" }}
-          >
-            <Avatar.Root w="7rem" h="7rem" border="4px solid" borderColor={useColorModeValue("white", "#111827")}>
-              <Avatar.Fallback name={data.profile?.name || 'Dens Maltos'} />
-              <Avatar.Image src={avatarImgSrc} alt={data.profile?.name || 'Dens Maltos'} />
-            </Avatar.Root>
-          </Box>
+        {/* Avatar */}
+        <Box
+          className="avatar-halo"
+          borderRadius="full"
+          p="1"
+          bgGradient="to-br"
+          gradientFrom="blue.500"
+          gradientTo="indigo.600"
+          boxShadow="xl"
+          flexShrink={0}
+        >
+          <Avatar.Root w={{ base: "9rem", md: "12rem" }} h={{ base: "9rem", md: "12rem" }} border="4px solid" borderColor={useColorModeValue("white", "#111827")}>
+            <Avatar.Fallback name={data.profile?.name || 'Dens Maltos'} />
+            <Avatar.Image src={avatarImgSrc} alt={data.profile?.name || 'Dens Maltos'} />
+          </Avatar.Root>
+        </Box>
 
-          <Box className="name-info" mt="1.2rem" textAlign="center">
-            <Heading className="profile-name" fontSize="1.3rem" fontWeight="extrabold" fontFamily="'Outfit', sans-serif">
+        {/* Info & Actions */}
+        <Box display="flex" flexDir="column" flex="1" alignItems={{ base: "center", md: "flex-start" }} w="100%" maxW="100%">
+          <Box display="flex" flexDir={{ base: "column", md: "row" }} alignItems={{ base: "center", md: "flex-end" }} gap="1.2rem" mb="1rem">
+            <Heading fontSize={{ base: "2rem", md: "3rem" }} fontWeight="900" letterSpacing="tight" lineHeight="1">
               {data.profile?.name || 'Dens Maltos'}
             </Heading>
+          </Box>
+
+          <Box display="flex" flexDirection={{ base: "column", md: "row" }} alignItems="center" gap="1.5" color="blue.500" fontSize="0.95rem" fontWeight="bold" mb="1.5rem">
             <Badge
-              className="profile-title-badge"
-              mt="0.4rem"
-              variant="subtle"
+              variant="solid"
               colorPalette="blue"
               px="3"
-              py="0.8"
-              borderRadius="full"
+              py="1"
               fontWeight="bold"
               textTransform="uppercase"
               fontSize="0.65rem"
-              letterSpacing="wider"
+              boxShadow="sm"
             >
               {data.profile?.title || 'Web Developer'}
             </Badge>
+            <Text display={{ base: "none", md: "block" }}>|</Text>
+            <Text display='flex' alignItems='center' gap='.5rem' mt={{ base: '2rem', md: '0' }}><BiSolidMap size="1.2rem" /> {data.profile?.location || 'Davao City, Philippines'}</Text>
           </Box>
-        </Box>
 
-        <Separator className="no-print" w="100%" my="1.5rem" color={borderLine} />
+          <Text fontSize={{ base: "1rem", md: "1.05rem" }} color={textMuted} fontWeight="500" lineHeight="1.7" mb="1.5rem">
+            {data.profile?.bio || ''}
+          </Text>
 
-        {/* Social Badges Stack */}
-        <HStack className="social-badges" gap="3.5" justifyContent="center" flexWrap="wrap">
-          {data.profile?.facebook_url && (
-            <a href={data.profile.facebook_url} target="_blank" rel="noopener noreferrer">
-              <Badge variant='surface' colorPalette="blue" size="md" _hover={{ transform: "translateY(-3px)", color: "blue.500" }} transition="all 0.2s">
-                <BiLogoFacebookCircle size="1.3rem" />
-              </Badge>
-            </a>
-          )}
-          {data.profile?.linkedin_url && (
-            <a href={data.profile.linkedin_url} target="_blank" rel="noopener noreferrer">
-              <Badge variant="surface" colorPalette="cyan" size="md" _hover={{ transform: "translateY(-3px)", color: "cyan.500" }} transition="all 0.2s">
-                <BiLogoLinkedinSquare size="1.3rem" />
-              </Badge>
-            </a>
-          )}
-          {data.profile?.github_url && (
-            <a href={data.profile.github_url} target="_blank" rel="noopener noreferrer">
-              <Badge variant="surface" colorPalette="gray" size="md" _hover={{ transform: "translateY(-3px)", color: "white" }} transition="all 0.2s">
-                <BiLogoGithub size="1.3rem" />
-              </Badge>
-            </a>
-          )}
-        </HStack>
+          {/* Action Row */}
+          <Box display="flex" flexDir={{ base: "column", sm: "row" }} alignItems="center" gap="1.2rem" w="100%" maxW="100%">
 
-        <Separator className="no-print" w="100%" my="1.5rem" color={borderLine} />
+            {/* Quick Actions Select */}
+            <Box position="relative" w={{ base: "100%" }}>
+              <Select.Root
+                collection={actionCollection}
+                value={[]}
+                onValueChange={(e) => {
+                  const val = e.value[0]
+                  if (val) {
+                    const idx = Number(val)
+                    if (idx >= 0 && commandOptions[idx]) {
+                      commandOptions[idx].action()
+                    }
+                  }
+                }}
+                size="sm"
+                variant="outline"
+              >
+                <Select.Control>
+                  <Select.Trigger
+                    bg={searchBg}
+                    borderColor={cardBorder}
+                    color={textMuted}
+                    fontWeight="semibold"
+                    fontSize="0.75rem"
+                    _hover={{ borderColor: "blue.400", boxShadow: "md" }}
+                    transition="all 0.2s"
+                  >
+                    <Select.ValueText placeholder="Quick Actions..." />
+                  </Select.Trigger>
+                  <Select.IndicatorGroup>
+                    <Select.Indicator color={textMuted} />
+                  </Select.IndicatorGroup>
+                </Select.Control>
+                <Select.Positioner>
+                  <Select.Content bg={searchBg} border="1px solid" borderColor={cardBorder} borderRadius="md" p="1.5" boxShadow="lg" zIndex="99">
+                    {actionCollection.items.map((item) => (
+                      <Select.Item key={item.value} item={item} cursor="pointer" _hover={{ bg: "blue.50", color: "blue.600" }} fontSize="0.75rem" fontWeight="semibold" transition="all 0.2s">
+                        <Select.ItemText>{item.label}</Select.ItemText>
+                      </Select.Item>
+                    ))}
+                  </Select.Content>
+                </Select.Positioner>
+              </Select.Root>
+            </Box>
 
-        {/* Print Action Stack */}
-        <Stack w="100%" gap="2" className="no-print">
-          <Button
-            onClick={handleCopyATSResume}
-            w="100%"
-            size="sm"
-            colorPalette="blue"
-            variant="outline"
-            borderRadius="xl"
-            boxShadow="sm"
-            fontWeight="bold"
-            _hover={{ transform: "translateY(-1px)", boxShadow: "md" }}
-            transition="all 0.2s"
-            display="flex"
-            alignItems="center"
-            gap="2"
-          >
-            {copied ? <BiCheck size="1.1rem" /> : <BiCopy size="1.1rem" />}
-            {copied ? "Copied!" : "Copy ATS-Friendly Resume"}
-          </Button>
+            {/* ATS Button */}
+            <Button
+              onClick={handleCopyATSResume}
+              size="sm"
+              colorPalette="blue"
+              variant="outline"
+              fontWeight="semibold"
+              fontSize="0.75rem"
+              _hover={{ transform: "translateY(-1px)", bg: "blue.500", color: "white" }}
+              transition="all 0.2s"
+              w={{ base: "100%", sm: "auto" }}
+            >
+              {copied ? <BiCheck size="1.2rem" /> : <BiCopy size="1.2rem" />}
+              {copied ? "Copied!" : "Copy ATS Resume"}
+            </Button>
 
-          <Button
-            hidden
-            onClick={handleDownloadPDF}
-            w="100%"
-            size="sm"
-            colorPalette="indigo"
-            variant="subtle"
-            borderRadius="xl"
-            boxShadow="sm"
-            fontWeight="bold"
-            _hover={{ transform: "translateY(-1px)", boxShadow: "md" }}
-            transition="all 0.2s"
-            display="flex"
-            alignItems="center"
-            gap="2"
-          >
-            <BiSolidFilePdf size="1.1rem" />
-            Download PDF Resume
-          </Button>
-        </Stack>
+            {/* Socials */}
+            <HStack className="social-badges" gap="4">
+              {data.profile?.facebook_url && (
+                <a href={data.profile.facebook_url} target="_blank" rel="noopener noreferrer">
+                  <Box color="gray.400" _hover={{ color: "blue.500", transform: "translateY(-3px)" }} transition="all 0.2s">
+                    <BiLogoFacebookCircle size="1.8rem" />
+                  </Box>
+                </a>
+              )}
+              {data.profile?.linkedin_url && (
+                <a href={data.profile.linkedin_url} target="_blank" rel="noopener noreferrer">
+                  <Box color="gray.400" _hover={{ color: "cyan.600", transform: "translateY(-3px)" }} transition="all 0.2s">
+                    <BiLogoLinkedinSquare size="1.8rem" />
+                  </Box>
+                </a>
+              )}
+              {data.profile?.github_url && (
+                <a href={data.profile.github_url} target="_blank" rel="noopener noreferrer">
+                  <Box color="gray.400" _hover={{ color: "gray.900", transform: "translateY(-3px)" }} transition="all 0.2s">
+                    <BiLogoGithub size="1.8rem" />
+                  </Box>
+                </a>
+              )}
+            </HStack>
 
-        <Box className="no-print" mt="1.2rem" display="flex" alignItems="center" gap="1.5" color={textMuted} fontSize="0.75rem" fontWeight="extrabold">
-          <BiSolidMap size="1rem" color="#3B82F6" /> {data.profile?.location || 'Davao City, Philippines'}
+          </Box>
         </Box>
       </Box>
     </Skeleton>

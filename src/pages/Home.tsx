@@ -17,7 +17,7 @@ export default function Home() {
   const bg = useColorModeValue('#F8FAFC', '#0B0F19')
 
   return (
-    <Box w="100vw" h="100vh" bg={bg} overflow="hidden" transition="background 0.3s ease">
+    <Box w="100%" h="100vh" bg={bg} overflow="hidden" transition="background 0.3s ease">
       <Stack gap="0" w="100%" h="100%">
         <Header 
           scrollToWork={() => scrollTo(workRef)} 

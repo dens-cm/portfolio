@@ -1,25 +1,25 @@
 import React from 'react'
-import { 
-  Box, 
-  Button, 
-  Heading, 
-  Highlight, 
-  HStack, 
-  Separator, 
-  Stack, 
-  Text, 
-  Textarea, 
-  Grid,
-  GridItem,
-  Skeleton
+import {
+  Box,
+  Button,
+  Heading,
+  Highlight,
+  Stack,
+  Text,
+  Textarea,
+  Input,
+  Skeleton,
+  Field
 } from "@chakra-ui/react"
-import { BiSolidEnvelope, BiSupport } from "react-icons/bi"
+import { BiSolidEnvelope, BiPaperPlane } from "react-icons/bi"
 
 interface DeveloperConsoleProps {
   loading: boolean
   contactRef: React.RefObject<HTMLDivElement | null>
   message: string
   setMessage: (val: string) => void
+  userEmail: string
+  setUserEmail: (val: string) => void
   sending: boolean
   handleSend: (e: React.FormEvent) => void
   cardBg: string
@@ -33,165 +33,93 @@ export default function DeveloperConsole({
   contactRef,
   message,
   setMessage,
+  userEmail,
+  setUserEmail,
   sending,
   handleSend,
-  cardBg,
-  cardBorder,
   textMuted
 }: DeveloperConsoleProps) {
   return (
-    <GridItem colSpan={12} className="no-print">
-      <Skeleton loading={loading} variant="pulse" borderRadius="3xl">
-        <Box 
-          ref={contactRef} 
-          style={{ scrollMarginTop: '5rem' }}
-          bg={cardBg} 
-          border="1px solid"
-          borderColor={cardBorder}
-          borderRadius="3xl"
-          p={{ base: "1.8rem", md: "2.5rem" }}
-          boxShadow="md"
-          transition="all 0.3s ease"
-          _hover={{ borderColor: "rgba(79, 70, 229, 0.25)" }}
-        >
-          <Heading fontSize="1.15rem" fontWeight="900" display="flex" alignItems="center" gap="2.5" textTransform="uppercase" fontFamily="'Outfit', sans-serif" mb="1.5rem">
-            <BiSolidEnvelope size="1.3rem" color="#4F46E5" /> Developer Console
-          </Heading>
+    <Skeleton loading={loading} variant="pulse">
+      <Box
+        ref={contactRef}
+        className="developer-console-card"
+        style={{ scrollMarginTop: '5rem' }}
+        transition="all 0.3s ease"
+        _hover={{ borderColor: "rgba(59, 130, 246, 0.25)" }}
+      >
+        <Heading fontSize="1rem" fontWeight='semibold' display="flex" alignItems="center" gap="2.5" textTransform="uppercase" mb="1.5rem">
+          <BiSolidEnvelope color="#3B82F6" /> Get in Touch
+        </Heading>
 
-          <Grid templateColumns="repeat(12, 1fr)" gap="2rem" alignItems="start">
-            
-            {/* Left Column Description */}
-            <GridItem colSpan={{ base: 12, md: 5 }}>
-              <Heading fontSize="0.95rem" fontWeight="extrabold" display="flex" alignItems="center" gap="2" mb="0.5rem">
-                <BiSupport size="1.1rem" color="#4F46E5" /> Let's Build Together
-              </Heading>
-              <Text fontSize="0.85rem" color={textMuted} lineHeight="relaxed">
-                Do you have a project in mind, contract opportunity, or just want to grab a coffee? Submit an execution command through the secure compiler console on the right, or drop an direct static email!
-              </Text>
+        <Box display="flex" flexDir={{ base: "column", md: "row" }} gap={{ base: "2rem", md: "4rem" }} alignItems="flex-start" w="100%">
+          
+          {/* Left Column Description */}
+          <Box flex={{ base: "1", md: "5" }} w="100%" fontSize="0.85rem">
+            <Heading fontSize={{ base: ".9rem", md: "1rem" }} fontWeight="bold" mb=".5rem" lineHeight="1.2" letterSpacing="tight">
+              Let's Build Something Great Together
+            </Heading>
+            <Text color={textMuted} lineHeight="relaxed" mb="2rem">
+              Have a project in mind, a contract opportunity, or just want to say hi? I'm always open to discussing new opportunities and collaborations.
+            </Text>
+
+            <Highlight query="dens.maltos@gmail.com" styles={{ fontWeight: "semibold", color: "blue.500" }}>
+              Direct Email: dens.maltos@gmail.com
+            </Highlight>
+          </Box>
+
+          {/* Right Column: Normal Form */}
+          <Box flex={{ base: "1", md: "7" }} w="100%">
+            <Stack gap="1rem" as="form" onSubmit={handleSend} w="100%">
               
-              <Box 
-                mt="1.2rem" 
-                p="4" 
-                borderRadius="2xl" 
-                bg="rgba(79, 70, 229, 0.03)" 
-                border="1px dashed"
-                borderColor="rgba(79, 70, 229, 0.2)"
-                fontSize="0.8rem"
-              >
-                <Highlight query="dens.maltos@gmail.com" styles={{ fontWeight: "bold", color: "blue.500" }}>
-                  Personal Inbox: dens.maltos@gmail.com
-                </Highlight>
-              </Box>
-            </GridItem>
+              <Field.Root w="100%">
+                <Field.Label fontWeight="semibold" fontSize={{ base: ".9rem", md: "1rem" }}>Your Email</Field.Label>
+                <Input
+                  type="email"
+                  required
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  placeholder="john@example.com"
+                  fontSize="0.85rem"
+                  w="100%"
+                  _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px #3B82F6" }}
+                />
+              </Field.Root>
 
-            {/* Right Column: Code Editor Mockup */}
-            <GridItem colSpan={{ base: 12, md: 7 }}>
-              <Box 
-                bg="#090d16" 
-                border="1px solid" 
-                borderColor="rgba(255,255,255,0.06)" 
-                borderRadius="2xl" 
-                overflow="hidden" 
-                boxShadow="2xl"
-                w="100%"
-                maxW="100%"
-              >
-                {/* VS Code styled header tab */}
-                <Box 
-                  bg="#0d1527" 
-                  px="4.5" 
-                  py="3" 
-                  display="flex" 
-                  alignItems="center" 
-                  justifyContent="space-between"
-                  borderBottom="1px solid"
-                  borderColor="rgba(255,255,255,0.04)"
+              <Field.Root w="100%">
+                <Field.Label fontWeight="semibold" fontSize={{ base: ".9rem", md: "1rem" }}>How can I help you?</Field.Label>
+                <Textarea
+                  required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Hi Dens, I'd like to discuss a project..."
+                  rows={7}
+                  resize="vertical"
+                  fontSize="0.85rem"
+                  w="100%"
+                  _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 1px #3B82F6" }}
+                />
+              </Field.Root>
+
+              <Box display="flex" justifyContent="flex-end" w="100%">
+                <Button
+                  type="submit"
+                  loading={sending}
+                  colorPalette="blue"
+                  fontWeight="semibold"
+                  fontSize="0.7rem"
+                  size='xs'
+                  textTransform="uppercase"
+                  _hover={{ transform: "translateY(-1.5px)" }}
+                  transition="all 0.25s ease"
                 >
-                  <HStack gap="2">
-                    <Box w="0.7rem" h="0.7rem" borderRadius="full" bg="#ff5f56" />
-                    <Box w="0.7rem" h="0.7rem" borderRadius="full" bg="#ffbd2e" />
-                    <Box w="0.7rem" h="0.7rem" borderRadius="full" bg="#27c93f" />
-                  </HStack>
-                  <Text fontFamily="mono" fontSize="0.7rem" color="gray.400" fontWeight="extrabold">
-                    message_compiler.js — DensTerminal
-                  </Text>
-                  <Box w="2rem" />
-                </Box>
-
-                {/* Code editor body block */}
-                <Box p="4.5" fontFamily="mono" fontSize="0.8rem" color="gray.300" overflowX="auto" w="100%">
-                  <Text color="gray.500" mb="1.5">// Establish WebSocket direct packet transfer</Text>
-                  
-                  <HStack gap="2" wrap="wrap">
-                    <Text color="#f472b6">const</Text>
-                    <Text color="#60a5fa">payload</Text>
-                    <Text color="#f472b6">=</Text>
-                    <Text color="#c084fc">{"{"}</Text>
-                  </HStack>
-
-                  <Box pl="6" py="1.5">
-                    <HStack gap="2">
-                      <Text color="#60a5fa">recipient:</Text>
-                      <Text color="#34d399">"dens.maltos@gmail.com",</Text>
-                    </HStack>
-
-                    <Stack gap="2" mt="2" w="100%">
-                      <Text color="#60a5fa">messageBody: </Text>
-                      <Textarea 
-                        required 
-                        value={message} 
-                        onChange={(e) => setMessage(e.target.value)} 
-                        fontSize="0.8rem" 
-                        fontFamily="mono"
-                        color="white"
-                        bg="rgba(255,255,255,0.02)"
-                        borderRadius="xl" 
-                        p="4"
-                        border="1px solid"
-                        borderColor="rgba(255,255,255,0.08)"
-                        _focus={{ borderColor: "blue.400", boxShadow: "0 0 0 1px #3B82F6" }}
-                        placeholder="Write your dynamic message here..." 
-                        rows={5}
-                        w="100%"
-                      />
-                    </Stack>
-                  </Box>
-
-                  <Text color="#c084fc">{"};"}</Text>
-
-                  <HStack gap="2" mt="3">
-                    <Text color="#f472b6">await</Text>
-                    <Text color="#fbbf24">sendSecureEmail</Text>
-                    <Text color="#c084fc">{"(payload);"}</Text>
-                  </HStack>
-
-                  <Separator my="5" color="rgba(255,255,255,0.05)" />
-
-                  <Box display="flex" justifyContent="space-between" alignItems="center" gap="2">
-                    <Text fontSize="0.68rem" color="gray.500" fontWeight="bold">
-                      *Compiles direct binary package to SMTP relay
-                    </Text>
-                    <Button 
-                      onClick={handleSend} 
-                      loading={sending}
-                      size="sm"
-                      colorPalette="blue"
-                      borderRadius="xl"
-                      px="6"
-                      fontWeight="extrabold"
-                      boxShadow="lg"
-                      _hover={{ transform: "translateY(-1.5px)" }}
-                      transition="all 0.25s ease"
-                    >
-                      Send Command
-                    </Button>
-                  </Box>
-                </Box>
+                  <BiPaperPlane size="1.2rem" /> Send Message
+                </Button>
               </Box>
-            </GridItem>
-          </Grid>
+            </Stack>
+          </Box>
         </Box>
-      </Skeleton>
-    </GridItem>
+      </Box>
+    </Skeleton>
   )
 }

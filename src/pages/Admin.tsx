@@ -53,7 +53,12 @@ export default function Admin() {
   const [editingExp, setEditingExp] = useState<any | null>(null) // null = view list, {} = new exp, {id} = edit exp
   const [editingProj, setEditingProj] = useState<any | null>(null) // null = view list, {} = new project, {id} = edit project
   const [editingEdu, setEditingEdu] = useState<any | null>(null) // null = view list, {} = new edu, {id} = edit edu
-  const [newSkill, setNewSkill] = useState({ name: '', url: '', color: '#3B82F6', category: 'backend', order_index: 0 })
+  const getRandomColor = () => {
+    const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#06B6D4', '#EAB308']
+    return colors[Math.floor(Math.random() * colors.length)]
+  }
+
+  const [newSkill, setNewSkill] = useState({ name: '', url: '', color: getRandomColor(), category: 'backend', order_index: 0 })
 
   // Operation Loader States
   const [savingProfile, setSavingProfile] = useState(false)
@@ -274,7 +279,7 @@ export default function Admin() {
       if (error) throw error
       toaster.create({ title: 'Skill Added', type: 'success' })
       clearLocalCache()
-      setNewSkill({ name: '', url: '', color: '#3B82F6', category: 'backend', order_index: 0 })
+      setNewSkill({ name: '', url: '', color: getRandomColor(), category: 'backend', order_index: 0 })
       fetchCMSData()
     } catch (err: any) {
       toaster.create({ title: 'Add Failed', description: err.message, type: 'error' })
