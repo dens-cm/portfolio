@@ -1,8 +1,8 @@
 import React from 'react'
-import { 
-  Box, 
-  Heading, 
-  Text, 
+import {
+  Box,
+  Heading,
+  Text,
   Badge,
   Skeleton,
   List
@@ -18,6 +18,7 @@ import {
   TimelineRoot,
   TimelineTitle,
 } from "@/components/ui/timeline"
+import ScrollReveal from "@/components/ui/ScrollReveal"
 
 interface WorkHistoryProps {
   loading: boolean
@@ -39,7 +40,7 @@ export default function WorkHistory({
 
   return (
     <Skeleton loading={loading} variant="pulse">
-      <Box 
+      <Box
         ref={workRef}
         className="work-history-card"
         style={{ scrollMarginTop: '5rem' }}
@@ -55,9 +56,9 @@ export default function WorkHistory({
         <TimelineRoot width="100%">
           {data.experience.map((exp, idx) => (
             <TimelineItem key={idx}>
-              <TimelineConnector 
-                bg="blue.500" 
-                color="white" 
+              <TimelineConnector
+                bg="blue.500"
+                color="white"
                 borderColor={nodeBorderColor}
                 boxShadow="sm"
                 display="flex"
@@ -67,33 +68,35 @@ export default function WorkHistory({
                 <BiSolidBriefcase />
               </TimelineConnector>
               <TimelineContent width="100%">
-                <TimelineTitle width="100%">
-                  <Box w="100%" display="flex" flexDir={{ base: "column", sm: "row" }} alignItems={{ base: "start", sm: "center" }} justifyContent="space-between" gap="2">
-                    <Text fontSize=".9rem" fontWeight="bold">
-                      {exp.role}
+                <ScrollReveal>
+                  <TimelineTitle width="100%">
+                    <Box w="100%" display="flex" flexDir={{ base: "column", sm: "row" }} alignItems={{ base: "start", sm: "center" }} justifyContent="space-between" gap="2">
+                      <Text fontSize=".9rem" fontWeight="bold">
+                        {exp.role}
+                      </Text>
+                      <Badge variant="outline" colorPalette="blue" fontSize="0.65rem" fontWeight="semibold" textTransform="uppercase">
+                        {exp.start_date} - {exp.end_date}
+                      </Badge>
+                    </Box>
+                  </TimelineTitle>
+                  <TimelineDescription width="100%">
+                    <Text fontSize="0.8rem" color="blue.500" fontWeight="bold" fontStyle='italic'>
+                      <a href={exp.company_url} target="_blank" rel="noopener noreferrer">
+                        <Box as="span" display="inline-flex" alignItems="center" gap="1" _hover={{ textDecoration: 'underline' }}>
+                          {exp.company_name} <BiLinkExternal />
+                        </Box>
+                      </a>
                     </Text>
-                    <Badge variant="outline" colorPalette="blue" fontSize="0.65rem" fontWeight="semibold" textTransform="uppercase">
-                      {exp.start_date} - {exp.end_date}
-                    </Badge>
-                  </Box>
-                </TimelineTitle>
-                <TimelineDescription width="100%">
-                  <Text fontSize="0.8rem" color="blue.500" fontWeight="bold" fontStyle='italic'>
-                    <a href={exp.company_url} target="_blank" rel="noopener noreferrer">
-                      <Box as="span" display="inline-flex" alignItems="center" gap="1" _hover={{ textDecoration: 'underline' }}>
-                        {exp.company_name} <BiLinkExternal />
-                      </Box>
-                    </a>
-                  </Text>
-                  
-                  <List.Root mt="0.8rem" gap="2" fontSize="0.85rem" color={textMuted} pl="1.2rem" lineHeight="1.6">
-                    {exp.points.map((point, pIdx) => (
-                      <List.Item key={pIdx} style={{ listStyleType: "disc" }}>
-                        {point}
-                      </List.Item>
-                    ))}
-                  </List.Root>
-                </TimelineDescription>
+
+                    <List.Root mt="0.8rem" gap="2" fontSize="0.85rem" color={textMuted} pl="1.2rem" lineHeight="1.6">
+                      {exp.points.map((point, pIdx) => (
+                        <List.Item key={pIdx} style={{ listStyleType: "disc" }}>
+                          {point}
+                        </List.Item>
+                      ))}
+                    </List.Root>
+                  </TimelineDescription>
+                </ScrollReveal>
               </TimelineContent>
             </TimelineItem>
           ))}

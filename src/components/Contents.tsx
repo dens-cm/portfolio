@@ -71,7 +71,7 @@ export default function Contents({ workRef, projectsRef, contactRef }: ContentsP
   const bgMain = useColorModeValue("#F9FAFB", "#0A0A0C")
   const cardBg = useColorModeValue("white", "rgba(255, 255, 255, 0.02)")
   const cardBorder = useColorModeValue("gray.200", "rgba(255, 255, 255, 0.04)")
-  const borderLine = useColorModeValue("gray.100", "rgba(255, 255, 255, 0.05)")
+  const borderLine = useColorModeValue("gray.300", "rgba(63, 60, 60, 0.73)")
   const textMuted = useColorModeValue("gray.500", "gray.400")
 
   const handleRequestPDFSubmit = async (email: string) => {
@@ -336,6 +336,7 @@ ${educationText}`
         </Box>
 
       </Box>
+
       <RequestPDFDialog 
         isOpen={isPdfModalOpen} 
         onClose={() => setIsPdfModalOpen(false)} 

@@ -23,7 +23,7 @@ export default function Footer() {
                     color={{ base: "blue.600", _dark: "blue.400" }}
                     _hover={{ textDecoration: "underline", color: "blue.500" }}
                 >
-                    ReactJS
+                    React
                 </Link>{' '}
                 and{' '}
                 <Link
